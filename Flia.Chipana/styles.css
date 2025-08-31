@@ -1,0 +1,104 @@
+/* Todo el body */
+#body-login{
+    background-color: rgba(182, 182, 182, 0.377);
+    font-family: Arial, sans-serif;
+}
+/* Todo el login */
+.container-login {
+    display: flex;              
+    justify-content: center;    
+    align-items: center;       
+    min-height: 95vh;
+    padding: 10px;
+    box-sizing: border-box;          
+}
+
+
+/* El formulario y el logo */
+/* Panel del logo */
+.conteiner-login-logo {
+    flex: 1;
+    max-width: 470px;
+    min-height: 55vh; 
+    background-color: rgb(177, 7, 19);
+    border-radius: 0px 30px 30px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+#patron-top{
+    width: 470px;
+    border-top-right-radius: 30px;
+}    
+#logo-inca{
+    width: 50%;
+
+}
+#patron-botton{
+    width: 470px;
+    border-bottom-right-radius: 30px;
+}
+
+
+/* Formulario */
+.container-login-form {
+    flex: 1;
+    max-width: 460px;
+    min-height: 55vh;
+    background-color: white;
+    border-radius: 30px;
+    margin-right: -25px;
+    z-index: 2;   
+
+
+}
+
+/* estilo del formulario */
+.container-login-form h1{
+    font-size: 35px;
+    margin-top: 110px;
+    margin-left: 60px;
+}
+.container-login-form p{
+    margin-top: -20px;
+    margin-left: 60px;
+    font-size: 15px;
+}
+.campo{
+    width: 55%;
+    padding: 10px;
+    margin-left: 60px;
+    margin-top: 20px;
+    border: none;
+    border-bottom: 2px solid;
+
+}
+.password-container {
+    position: relative;
+}
+.toggle-icon {
+    position: absolute;
+    right: 100px;
+    top: 35px;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+}
+.toggle-icon.hide {
+    display: none;
+}
+#btn-aceptar {
+    background: #b30000;
+    border: none;
+    padding: 12px 90px;
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 90px;
+    cursor: pointer;
+    
+}
+
+

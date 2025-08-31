@@ -3,23 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <title>Flia.Chipana</title>
 </head>
-<body>
-    <h1>Login</h1>
-    <p>Ingrese los datos solicitados</p>
-    <form action="">
-        <input type="text" name="Nombre" id="" placeholder="Nombre">
-        <br><br>
-        <input type="text" placeholder="Contraseña">
-        <button>ojo</button>
-        <button>ojo´nt</button>
-        <br><br>
-        <a href="main.html">Aceptar</a>
-    </form>
-    <img src="/resources/login/logo.png" alt="bichito">
-    <img src="/resources/login/patron.png" alt="Patron">
-    <img src="/resources/login/patron.png" alt="Patron">
+<body id="body-login">
+    <div class="container-login">
+    <div class="container-login-form">
+        <h1>Login</h1>
+        <p>Ingrese los datos solicitados</p>
+        <form>
+            <input type="text" name="nombre" class="campo"  placeholder="Nombre">
+
+            <div class="password-container">
+                <input type="password" id="password" class="campo" placeholder="Contraseña">
+                <!-- Icono ojo abierto -->
+                <i id="show" class="fa-solid fa-eye toggle-icon"></i>
+                <!-- Ojo tachado -->
+                <i id="hide" class="fa-solid fa-eye-slash toggle-icon hide"></i>
+            </div>
+            <br>
+            <button id="btn-aceptar" type="submit">Aceptar</button>
+        </form>
+    </div>
+
+<script>
+    const password = document.getElementById("password");
+    const show = document.getElementById("show");
+    const hide = document.getElementById("hide");
+
+    show.addEventListener("click", () => {
+    password.type = "text";
+    show.classList.add("hide");
+    hide.classList.remove("hide");
+    });
+
+    hide.addEventListener("click", () => {
+    password.type = "password";
+    hide.classList.add("hide");
+    show.classList.remove("hide");
+    });
+</script>
+
+
+
+    <div class="conteiner-login-logo">
+        <img src="/resources/login/patron.png" alt="Patron" id="patron-top">
+        <img src="/resources/login/logo.png" alt="bichito" id="logo-inca">
+        <img src="/resources/login/patron.png" alt="Patron" id="patron-botton" >
+    </div>
+    </div>
 </body>
 </html>
