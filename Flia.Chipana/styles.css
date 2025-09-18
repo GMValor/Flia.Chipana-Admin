@@ -1,89 +1,83 @@
-/* Todo el body */
-#body-login{
-    background-color: rgba(182, 182, 182, 0.377);
-    font-family: Arial, sans-serif;
-}
-/* Todo el login */
-.container-login {
-    display: flex;              
-    justify-content: center;    
-    align-items: center;       
-    min-height: 95vh;
-    padding: 10px;
-    box-sizing: border-box;          
-}
-
-
-/* El formulario y el logo */
-/* Panel del logo */
-.conteiner-login-logo {
-    flex: 1;
-    max-width: 470px;
-    min-height: 70vh; 
-    background-color: rgb(177, 7, 19);
-    border-radius: 0px 30px 30px 0px;
+/* ========================
+    ESCALADO PROPORCIONAL
+======================== */
+.scale-wrapper {
+    transform: scale(1);       
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+}
+/* Escalado según el ancho de la pantalla */
+@media (max-width: 1600px) {
+    .scale-wrapper { transform: scale(0.9); }
+}
+
+@media (max-width: 1400px) {
+    .scale-wrapper { transform: scale(0.8); }
+}
+
+@media (max-width: 1200px) {
+    .scale-wrapper { transform: scale(0.7); }
+}
+
+@media (max-width: 800px) {
+    .scale-wrapper { transform: scale(0.6); }
+}
+/* ========================
+    LOGIN
+======================== */
+/* Todo el body */
+#body-login {
+    background-color: rgb(250, 250, 250);
+    font-family: Arial, sans-serif;
+    height: 98vh;  
+    display: flex;
+    justify-content: center;
     align-items: center;
-    z-index: 1;
 }
-#patron-top{
-    width: 470px;
-    border-top-right-radius: 30px;
-}    
-#logo-inca{
-    width: 50%;
-
+/* Contenedor fijo del login */
+.container-login {
+    display: flex;
+    width: 930px;       
+    height: 550px;      
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
-#patron-botton{
-    width: 470px;
-    border-bottom-right-radius: 30px;
-}
-
-
-/* Formulario */
+/* Panel del formulario */
 .container-login-form {
     flex: 1;
-    max-width: 460px;
-    min-height: 70vh;
     background-color: white;
     border-radius: 30px;
-    margin-right: -25px;
-    z-index: 2;   
-
-
+    margin-right: -25px;  
+    position: relative; 
+    z-index: 2;
 }
-
-/* estilo del formulario */
-.container-login-form h1{
+.container-login-form h1 {
     font-size: 35px;
-    margin-top: 110px;
-    margin-left: 60px;
+    margin: 100px 0px 0px 80px;
 }
-.container-login-form p{
-    margin-top: -20px;
-    margin-left: 60px;
+.container-login-form p {
+    margin: 5px 0px 5px 80px;
     font-size: 15px;
 }
-.campo{
-    width: 55%;
+.campo {
+    width: 100%;
+    max-width: 280px;
     padding: 10px;
-    margin-left: 60px;
-    margin-top: 20px;
+    margin: 30px 0px 5px 80px;
     border: none;
     border-bottom: 2px solid;
-
 }
 .password-container {
     position: relative;
 }
 .toggle-icon {
     position: absolute;
-    right: 100px;
-    top: 35px;
+    right: 70px;
+    top: 45px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px;
     user-select: none;
 }
 .toggle-icon.hide {
@@ -95,10 +89,150 @@
     padding: 12px 90px;
     color: white;
     border-radius: 10px;
-    margin-top: 20px;
-    margin-left: 90px;
+    margin: 30px 0px 5px 120px;
     cursor: pointer;
-    
+}
+/* Panel del logo */
+.conteiner-login-logo {
+    flex: 1;
+    background-color: rgb(177, 7, 19);
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center;
+    z-index: 1;
+}
+#patron-top,
+#patron-botton {
+    width: 100%;
+}
+#logo-inca {
+    width: 45%;
+    opacity: 0.3;
 }
 
 
+
+
+/* ==============================
+    ESCALADO PROPORCIONAL MAIN
+=================================*/
+.scale-wrapper-main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+/* ========================
+MAIN
+======================== */
+#body-main {
+    margin: 0;
+    display: flex;       
+    flex-direction: row; 
+    min-height: 100vh;
+}
+/* panel lateral */
+.panel-navegacion {
+    position: relative;
+    background-color: rgb(177, 7, 19);
+    width: 280px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 1;
+}
+/* Contenedor para escalar contenido del panel lateral */
+.panel-content {
+    width: 100%;
+    transform-origin: top left;
+    transition: transform 0.3s;
+}
+#patron-top-main {
+    width: 100%;
+}
+#patron-botton-main {
+    width: 100%;
+    position: absolute; 
+    bottom: 0;
+}
+#logo-FliaChipana{
+    max-width: 100%;
+    height: auto;    
+    display: block;
+}
+/* panel principal */
+#main-principal {
+    flex: 1;            
+    padding: 20px;
+    background-color: #ffffff; 
+    box-sizing: border-box; 
+    position: relative; 
+    z-index: 2;
+    border-radius: 30px 0px 0px 30px;
+    margin-left: -30px;
+}
+/* Contenedor para escalar contenido del panel principal */
+.main-content {
+    width: 100%;
+    transform-origin: top left;
+    transition: transform 0.3s;
+}
+/* nav */
+nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+}
+nav a {
+    display: flex;             
+    align-items: center;      
+    color: white;
+    text-decoration: none;
+    padding: 10px 55px;
+    margin-bottom: 10px;
+    transition: background 0.3s;
+}
+nav a i {
+    margin-right: 15px;      
+}
+nav a:hover {
+    background-color: rgba(85, 4, 4, 0.2);
+    border-left: #ffffff solid 6px ;
+
+}
+/* ========================
+MEDIA QUERIES: escala y ajuste de fuentes/paddings
+======================== */
+/* hasta 1600px */
+@media (max-width: 1600px) { 
+    nav a { font-size: 18px; padding: 10px 40px; }
+    .panel-navegacion { width: 250px; }
+}
+/* hasta 1400px */
+@media (max-width: 1400px) {
+    nav a { font-size: 16px; padding: 8px 30px; }
+    .panel-navegacion { width: 220px; }
+}
+/* hasta 1200px */
+@media (max-width: 1200px) { 
+    nav a { font-size: 15px; padding: 8px 25px; }
+    .panel-navegacion { width: 200px; }
+
+    .panel-content, .main-content { transform: scale(0.9); }
+}
+/* hasta 1000px */
+@media (max-width: 1000px) { 
+    nav a { font-size: 14px; padding: 6px 20px; }
+    .panel-navegacion { width: 180px; }
+
+    .panel-content, .main-content { transform: scale(0.8); }
+}
+/* hasta 800px */
+@media (max-width: 800px)  { 
+    nav a { font-size: 12px; padding: 5px 15px; }
+    .panel-navegacion { width: 160px; }
+
+    .panel-content, .main-content { transform: scale(0.7); }
+}
