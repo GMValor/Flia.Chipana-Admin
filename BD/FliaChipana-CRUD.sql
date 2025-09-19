@@ -6,6 +6,54 @@ as
 select id_producto,descripcion,stock,id_proveedor,precio,costo,fecha_cad from productos
 go
 ---------------------------------------------------------------
+----Cliente-----------------------------------------------------
+create view vw_mostrar_clientes
+as
+select id_cliente,nombre,apellido,telefono,direccion,email,deuda from clientes
+go
+-----------------------------------------------------------------
+
+----Usuarios-----------------------------------------------------
+create view vw_mostrar_usuarios
+as
+select id_usuario,nombre,contraseña,rol from usuarios
+go
+-----------------------------------------------------------------
+
+----Proveedores--------------------------------------------------
+create view vw_mostrar_proveedores
+as
+select id_proveedor,nombre,telefono,email,direccion from proveedores
+go
+-----------------------------------------------------------------
+
+----Forma de Pago------------------------------------------------
+create view vw_mostrar_forma_pago
+as
+select id_forma_pago,descripcion from forma_pago
+go
+-----------------------------------------------------------------
+
+------Detalle de Forma de Pago-----------------------------------
+create view vw_mostrar_detalle_forma_pago
+as
+select id_venta,id_forma_pago,importe from detalle_forma_pago
+go
+-----------------------------------------------------------------
+
+----Venta--------------------------------------------------------
+create view vw_mostrar_ventas
+as
+select id_venta,id_usuario,fecha,id_cliente,total,descuento from ventas
+go
+-----------------------------------------------------------------
+
+------Detalle de Venta-------------------------------------------
+create view vw_mostrar_detalle_venta
+as
+select id_venta,id_producto,precio_total,cantidad,precio from detalle_venta
+go
+-----------------------------------------------------------------
 ---------------------------------------------------------------
 
 
