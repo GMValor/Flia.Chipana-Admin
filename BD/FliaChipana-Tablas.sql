@@ -6,7 +6,7 @@ use fliachipana
 create table usuarios(
 id_usuario int primary key,
 nombre nvarchar(60),
-contraseña nvarchar(60),
+contraseÃ±a nvarchar(60),
 rol nvarchar(60))
 go
 
@@ -117,11 +117,11 @@ exec spu_crear_cliente 1,'Gonzalo','Valor','341111111111','Ayacucho','gmvalor@gm
 create procedure spu_crear_usuarios
 @id_usuario int,
 @nombre nvarchar(60),
-@contraseña nvarchar(60),
+@contraseÃ±a nvarchar(60),
 @rol nvarchar(60)
 as
 insert into usuarios
-values(@id_usuario,@nombre,@contraseña,@rol)
+values(@id_usuario,@nombre,@contraseÃ±a,@rol)
 
 exec spu_crear_usuarios 1,'Lautaro','mani123','Admin'
 -----------------------------------------------------------------
