@@ -67,7 +67,21 @@
     padding: 10px;
     margin: 30px 0px 5px 80px;
     border: none;
-    border-bottom: 2px solid;
+    border-bottom: 2px solid #0e0e0e;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.campo::placeholder {
+    color: #999;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+/* Cuando el input está enfocado */
+.campo:focus::placeholder {
+    color: #0077b6;
+    font-size: 13px;
+    opacity: 0.7;
 }
 .password-container {
     position: relative;
@@ -83,15 +97,44 @@
 .toggle-icon.hide {
     display: none;
 }
-#btn-aceptar {
+#btn-aceptar-login {
     background: #b30000;
     border: none;
     padding: 12px 90px;
     color: white;
+    font-weight: bold;
     border-radius: 10px;
     margin: 30px 0px 5px 120px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+#btn-aceptar-login:hover {
+    background: linear-gradient(135deg, #e60000, #ff1a1a);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25); /*sombra*/ 
+}
+/* -------------------------------------
+Mensajes de error al iniciar sesion
+------------------------------------- */
+.input-wrapper {
+    position: relative;
+    margin-bottom: -10px;
+}
+.error-field {
+    color: #ed4956;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-left: 85px;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in-out; /*animacion definida*/
+}
+/* Animación sutil */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-3px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Panel del logo */
 .conteiner-login-logo {
     flex: 1;
@@ -148,6 +191,8 @@ MAIN
     width: 100%;
     transform-origin: top left;
     transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 #patron-top-main {
     width: 100%;
@@ -158,7 +203,9 @@ MAIN
     bottom: 0;
 }
 #logo-FliaChipana{
-    max-width: 100%;
+    max-width: 80%;
+    margin-left: 10px;
+    margin-top: 20px;
     height: auto;    
     display: block;
 }
@@ -183,7 +230,7 @@ MAIN
 nav {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
+    margin-top: 110px;
 }
 nav a {
     display: flex;             
@@ -236,3 +283,139 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 
     .panel-content, .main-content { transform: scale(0.7); }
 }
+
+
+
+
+
+
+
+
+
+
+.module-container-clientes {
+    background: #ffffff5d;
+    padding: 25px;
+    border-radius: 12px;
+    width: 95%;
+}
+
+.module-header-clientes {
+    display: flex;
+    flex-direction: column; /* Cambiamos a columna */
+    gap: 35px; /* Espacio entre título y búsqueda */
+    margin-bottom: 40px;
+}
+
+.module-header-clientes h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.search-add-clientes {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-bar-clientes {
+    padding: 8px 10px;
+    width: 25%;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    outline: none;
+    background-color: #f3d1d1e1;
+    
+}
+
+.btn-add-clientes {
+    background: rgb(177, 7, 19);
+    color: #fff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-add-clientes:hover {
+    background: #860101;
+}
+
+/* TABLA */
+/* encabezado */
+.custom-table-clientes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    
+}
+
+.custom-table-clientes th {
+    background: #ffe6e6;
+    color: rgb(177, 7, 19);
+    text-align: left;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-right: 2px solid white;
+
+}
+/* Para que el header de la tabla se quede fijo */
+.custom-table-clientes thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+/* Filas */
+.custom-table-clientes tr:nth-child(even) {      /*intercalar el color de la filas 2,4,6,etc*/
+    background-color: #dad8d8;
+}
+.custom-table-clientes td {
+    padding: 7px;
+}
+
+.actions-clientes {
+    display: flex;
+    gap: 8px;
+    
+}
+
+.btn-edit-clientes, .btn-delete-clientes {
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 17px;
+    
+}
+
+.btn-edit-clientes {
+    background: #99f79a;
+    color: #2d6a3c;
+}
+
+.btn-edit-clientes:hover {
+    background: #30ec85;
+    color: #0a0a0a;
+
+}
+
+.btn-delete-clientes {
+    background: #f8c8c8;
+    color: #a4161a;
+}
+
+.btn-delete-clientes:hover {
+    background: #e63946;
+    color: #fff;
+}
+
+.table-scroll-container {
+    max-height: 300px; /* altura máxima de la tabla visible */
+    overflow-y: auto;  /* activa scroll vertical si hay más filas */
+}
+
