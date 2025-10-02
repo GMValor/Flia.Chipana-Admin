@@ -293,34 +293,34 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 
 
 
-.module-container-clientes {
+.module-container{
     background: #ffffff5d;
     padding: 25px;
     border-radius: 12px;
     width: 95%;
 }
 
-.module-header-clientes {
+.module-header {
     display: flex;
     flex-direction: column; /* Cambiamos a columna */
     gap: 35px; /* Espacio entre título y búsqueda */
     margin-bottom: 40px;
 }
 
-.module-header-clientes h2 {
+.module-header h2 {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     font-size: 25px;
     font-weight: bold;
 }
 
-.search-add-clientes {
+.search-add {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.search-bar-clientes {
+.search-bar {
     padding: 8px 10px;
     width: 25%;
     border-radius: 20px;
@@ -330,7 +330,7 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
     
 }
 
-.btn-add-clientes {
+.btn-add {
     background: rgb(177, 7, 19);
     color: #fff;
     padding: 8px 20px;
@@ -340,20 +340,20 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
     font-weight: bold;
 }
 
-.btn-add-clientes:hover {
+.btn-add:hover {
     background: #860101;
 }
 
 /* TABLA */
 /* encabezado */
-.custom-table-clientes {
+.custom-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 15px;
     
 }
 
-.custom-table-clientes th {
+.custom-table th {
     background: #ffe6e6;
     color: rgb(177, 7, 19);
     text-align: left;
@@ -364,17 +364,17 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 
 }
 /* Para que el header de la tabla se quede fijo */
-.custom-table-clientes thead th {
+.custom-table thead th {
     position: sticky;
     top: 0;
     z-index: 1;
 }
 
 /* Filas */
-.custom-table-clientes tr:nth-child(even) {      /*intercalar el color de la filas 2,4,6,etc*/
+.custom-table tr:nth-child(even) {      /*intercalar el color de la filas 2,4,6,etc*/
     background-color: #dad8d8;
 }
-.custom-table-clientes td {
+.custom-table td {
     padding: 7px;
 }
 

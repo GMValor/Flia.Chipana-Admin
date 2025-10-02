@@ -5,7 +5,7 @@ require_once("../conexion.php");
 $conn = Conexion::conexionBD();
 
 // Consultar clientes
-$sql = "SELECT * FROM vw_mostrar_clientes";
+$sql = "SELECT * FROM vw_mostrar_proveedores";
 $stmt = $conn->query($sql);
 $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -17,7 +17,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- HEADER -->
     <div class="module-header">
-        <h2>CLIENTES</h2>
+        <h2>PROVEEDORES</h2>
         <div class="search-add">
             <input type="text" placeholder="Buscar cliente" class="search-bar">
             <button class="btn-add">Agregar items</button>
@@ -32,28 +32,19 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Apellido</th>
                 <th>Teléfono</th>
-                <th>Dirección</th>
                 <th>Email</th>
-                <th>Deuda</th>
-                <th>Acción</th>
+                <th>Dirección</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach($clientes as $c): ?>
             <tr>
-                <td><?= htmlspecialchars($c['id_cliente']) ?></td>
+                <td><?= htmlspecialchars($c['id_proveedor']) ?></td>
                 <td><?= htmlspecialchars($c['nombre']) ?></td>
-                <td><?= htmlspecialchars($c['apellido']) ?></td>
                 <td><?= htmlspecialchars($c['telefono']) ?></td>
-                <td><?= htmlspecialchars($c['direccion']) ?></td>
                 <td><?= htmlspecialchars($c['email'] ) ?></td>
-                <td><?= htmlspecialchars($c['deuda'] ) ?></td>
-                <td class="actions-clientes">
-                    <button class="btn-edit-clientes"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btn-delete-clientes"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
+                <td><?= htmlspecialchars($c['direccion']) ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
