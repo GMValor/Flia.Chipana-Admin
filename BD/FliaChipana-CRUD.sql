@@ -100,7 +100,7 @@ exec spu_crear_cliente 1,'Gonzalo','Valor','341111111111','Ayacucho','gmvalor@gm
 -----------------------------------------------------------------
 
 ----Usuarios-----------------------------------------------------
-create procedure spu_crear_usuarios
+create procedure spu_crear_usuario
 @id_usuario int,
 @nombre nvarchar(60),
 @contraseña nvarchar(60),
@@ -114,7 +114,7 @@ exec spu_crear_usuarios 1,'Lautaro','mani123','Admin'
 -----------------------------------------------------------------
 
 ----Proveedores--------------------------------------------------
-create procedure spu_crear_proveedores
+create procedure spu_crear_proveedor
 @id_proveedor int,
 @nombre nvarchar(60),
 @telefono nvarchar(15),
@@ -154,7 +154,7 @@ exec spu_crear_detalle_forma_pago 1,1,85500
 -----------------------------------------------------------------
 
 ----Venta--------------------------------------------------------
-create procedure spu_crear_ventas
+create procedure spu_crear_venta
 @id_venta bigint,
 @id_usuario int,
 @fecha datetime,
@@ -170,7 +170,7 @@ exec spu_crear_venta 1,1,'15/10/2024',1,85500,0
 -----------------------------------------------------------------
 
 ------Detalle de Venta-------------------------------------------
-create procedure spu_crear_detalle_ventas
+create procedure spu_crear_detalle_venta
 @id_venta bigint,
 @id_producto bigint,
 @precio_total decimal(18,2),
@@ -216,7 +216,7 @@ exec spu_eliminar_cliente 1
 -----------------------------------------------------------------
 
 ----Usuarios-----------------------------------------------------
-create procedure spu_eliminar_usuarios
+create procedure spu_eliminar_usuario
 @id_usuario bigint
 as
 delete from usuarios
@@ -310,7 +310,7 @@ exec spu_modificar_producto 1,'PRUEBA Producto',11,1500,3500,'11/11/2011'
 -----------------------------------------------------------------
 
 ----Cliente------------------------------------------------------
-create procedure spu_modficar_cliente
+create procedure spu_modificar_cliente
 @id_cliente bigint,
 @nombre nvarchar(60),
 @apellido nvarchar(60),
@@ -323,7 +323,7 @@ update clientes set nombre=@nombre,apellido=@apellido,telefono=@telefono,direcci
 where id_cliente = @id_cliente
 go
 
-exec spu_modficar_cliente 1,'Gonzalo', 'VALOR','341111111111','Ayacucho','gmvalor@gmail.com',850500
+exec spu_modificar_cliente 1,'Gonzalo', 'VALOR','341111111111','Ayacucho','gmvalor@gmail.com',850500
 -----------------------------------------------------------------
 
 ----Usuarios-----------------------------------------------------
