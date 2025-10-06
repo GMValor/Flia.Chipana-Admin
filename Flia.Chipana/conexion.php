@@ -1,10 +1,10 @@
 <?php
 class Conexion {
     public static function conexionBD() {   //cambio a clase estatica para no tener que intanciarla
-        $host = 'PC-KchJ';
+        $host = 'DESKTOP-J653QLH';
         $dbname = 'fliachipana';
         $username = 'su';
-        $password = 'peras2004';
+        $password = '123456';
         $puerto = 1433;
 
         try {
