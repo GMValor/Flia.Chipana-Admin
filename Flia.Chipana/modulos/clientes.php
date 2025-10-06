@@ -59,3 +59,41 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
     </table>
     </div>
+</div>
+
+
+
+<!-- PANEL LATERAL -->
+<div id="overlay" class="overlay"></div>
+<div id="panel-agregar" class="side-panel">
+    <div class="side-panel-header">
+        <h3><i class="fa-solid fa-user-plus"></i> Agregar Nuevo Cliente</h3>
+        <button id="btn-cerrar-panel" class="btn-close">&times;</button>
+    </div>
+    <form action="../abm/insertar_cliente.php" method="POST" class="form-agregar">
+        <label>ID</label>
+        <input type="number" name="id_cliente" required>
+    
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
+
+        <label>Apellido</label>
+        <input type="text" name="apellido" required>
+
+        <label>Teléfono</label>
+        <input type="text" name="telefono">
+
+        <label>Dirección</label>
+        <input type="text" name="direccion">
+
+        <label>Email</label>
+        <input type="email" name="email">
+
+        <label>Deuda</label>
+        <input type="decimal" name="deuda">
+
+
+        <button type="submit" class="btn-submit">Agregar</button>
+    </form>
+</div>
+

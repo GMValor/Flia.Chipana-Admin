@@ -330,19 +330,6 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
     
 }
 
-.btn-add {
-    background: rgb(177, 7, 19);
-    color: #fff;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.btn-add:hover {
-    background: #860101;
-}
 
 /* TABLA */
 /* encabezado */
@@ -374,33 +361,31 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 .custom-table tr:nth-child(even) {      /*intercalar el color de la filas 2,4,6,etc*/
     background-color: #dad8d8;
 }
-.custom-table td {
-    padding: 7px;
-}
 
 .actions {
     display: flex;
-    gap: 8px;
-    
+    gap: 14px;
+    justify-content: center;
+
 }
 
 .btn-edit, .btn-delete {
     border: none;
     cursor: pointer;
-    padding: 6px;
+    padding: 4px;
     border-radius: 6px;
     font-size: 17px;
     
 }
 
 .btn-edit {
-    background: #99f79a;
+    background: #a6f3a7;
     color: #2d6a3c;
 }
 
 .btn-edit:hover {
     background: #30ec85;
-    color: #0a0a0a;
+    color: #ffffff;
 
 }
 
@@ -415,7 +400,174 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 }
 
 .table-scroll-container {
-    max-height: 300px; /* altura máxima de la tabla visible */
+    max-height: 400px; /* altura máxima de la tabla visible */
     overflow-y: auto;  /* activa scroll vertical si hay más filas */
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ========================
+PANEL LATERAL (oculto al inicio)
+======================== */
+.side-panel {
+    height: auto;    
+    position: fixed;
+    top: 0;
+    right: -520px; /* ← lo mantiene oculto al inicio */
+    width: 340px;
+    max-height: 100vh;
+    background: #fff;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+    border-radius: 16px 0 0 16px;
+    padding: 15px;
+    transition: right 0.4s ease;
+    z-index: 1001;
+    overflow-y: auto;
+     box-sizing: border-box;
+}
+
+/* cuando se activa */
+.side-panel.active {
+    right: 0;
+}
+
+/* encabezado del panel */
+.side-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: #ffe6e6;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.side-panel-header h3 {
+    color: #000000;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-close {
+    border: none;
+    background: none;
+    font-size: 24px;
+    color: #000000;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-close:hover {
+    transform: scale(1.2);
+}
+
+/* formulario dentro del panel */
+.form-agregar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-agregar label {
+    font-weight: bold;
+    color: #000000;
+    margin-top: 8px;
+}
+
+.form-agregar input {
+    padding: 6px 8px;
+    border: 0.5px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.form-agregar input:focus {
+    border-color:#fab3b3;
+}
+
+/* botón del formulario */
+.btn-submit {
+    background: #b10713;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-submit:hover {
+    background: #8e050f;
+    transform: translateY(-1px);
+    font-weight: bold;
+
+    
+}
+
+/* ========================
+   OVERLAY (oscurece el fondo)
+======================== */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1000;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ========================
+   BOTÓN "Agregar items"
+======================== */
+.btn-add {
+    background: #b10713;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add:hover {
+    background: #8e050f;
+    transform: translateY(-1px);
+    font-weight: bold;
+
+}

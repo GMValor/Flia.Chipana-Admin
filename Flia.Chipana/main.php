@@ -54,6 +54,6 @@ function cargarModulo(modulo) {
 }
 
 </script>
-
+<script src="js/panel_agregar.js"></script>
 </body>
 </html>
