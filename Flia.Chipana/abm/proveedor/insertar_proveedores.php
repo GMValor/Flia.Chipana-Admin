@@ -6,21 +6,19 @@ header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $id_cliente = $_POST["id_cliente"];
+    $id_proveedor = $_POST["id_proveedor"];
     $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
     $telefono = $_POST["telefono"];
-    $direccion = $_POST["direccion"];
     $email = $_POST["email"];
-    $deuda = $_POST["deuda"];
+    $direccion = $_POST["direccion"];
 
     try {
         $sql = "EXEC spu_crear_cliente 
-                @id_cliente = ?, @nombre = ?, @apellido = ?, @telefono = ?, @direccion = ?, @email = ?, @deuda = ?";
+                @id_proveedor = ?, @nombre = ?, @telefono = ?, @email = ?, @direccion = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$id_cliente, $nombre, $apellido, $telefono, $direccion, $email, $deuda]);
+        $stmt->execute([$id_proveedor, $nombre, $telefono, $email, $direccion]);
 
-        echo json_encode(['success' => true, 'message' => 'Cliente agregado correctamente']);
+        echo json_encode(['success' => true, 'message' => 'Proveedor agregado correctamente']);
 
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => "Error: " . $e->getMessage()]);
