@@ -47,12 +47,15 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= htmlspecialchars($c['nombre']) ?></td>
                 <td><?= htmlspecialchars($c['apellido']) ?></td>
                 <td><?= htmlspecialchars($c['telefono']) ?></td>
-                <td><?= htmlspecialchars($c['direccion']) ?></td>
+                <td><?= htmlspecialchars($c['direccion']) ?></td>   
                 <td><?= htmlspecialchars($c['email'] ) ?></td>
                 <td><?= htmlspecialchars($c['deuda'] ) ?></td>
                 <td class="actions">
                     <button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <form method="POST" action="/Flia.Chipana/abm/eliminar_cliente.php" onsubmit="return confirm('¿Eliminar este cliente?')">
+                    <input type="hidden" name="id_cliente" value="<?= htmlspecialchars($c['id_cliente']) ?>">
                     <button class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
                 </td>
             </tr>
             <?php endforeach; ?>
