@@ -37,23 +37,13 @@
         </div>
     </main>
 </div>
-<script>
-function cargarModulo(modulo) {
-    fetch("modulos/" + modulo) // 👈 agregamos ../ para subir un nivel
-        .then(res => {
-            if (!res.ok) throw new Error("HTTP error " + res.status);
-            return res.text();
-        })
-        .then(data => {
-            document.getElementById("contenido").innerHTML = data;
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById("contenido").innerHTML = "<p>Error al cargar el módulo.</p>";
-        });
-}
+<script src="js/cargarModulo.js"></script>
 
-</script>
 <script src="js/panel_agregar.js"></script>
+
+<script src="js/buscadorDinamico.js"></script>
+
+
+
 </body>
 </html>

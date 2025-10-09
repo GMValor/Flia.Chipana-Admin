@@ -29,7 +29,7 @@
 /* Todo el body */
 #body-login {
     background-color: rgb(250, 250, 250);
-    font-family: Arial, sans-serif;
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
     height: 98vh;  
     display: flex;
     justify-content: center;
@@ -174,6 +174,8 @@ MAIN
     display: flex;       
     flex-direction: row; 
     min-height: 100vh;
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
 }
 /* panel lateral */
 .panel-navegacion {
@@ -203,8 +205,8 @@ MAIN
     bottom: 0;
 }
 #logo-FliaChipana{
-    max-width: 80%;
-    margin-left: 10px;
+    max-width: 75%;
+    margin-left: 12px;
     margin-top: 20px;
     height: auto;    
     display: block;
@@ -239,7 +241,8 @@ nav a {
     text-decoration: none;
     padding: 10px 55px;
     margin-bottom: 10px;
-    transition: background 0.3s;
+    transition: background 0.3s; 
+
 }
 nav a i {
     margin-right: 15px;      
@@ -254,31 +257,31 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 ======================== */
 /* hasta 1600px */
 @media (max-width: 1600px) { 
-    nav a { font-size: 18px; padding: 10px 40px; }
+    nav a { font-size: 16px; padding: 10px 40px; }
     .panel-navegacion { width: 250px; }
 }
 /* hasta 1400px */
 @media (max-width: 1400px) {
-    nav a { font-size: 16px; padding: 8px 30px; }
+    nav a { font-size: 14px; padding: 8px 30px; }
     .panel-navegacion { width: 220px; }
 }
 /* hasta 1200px */
 @media (max-width: 1200px) { 
-    nav a { font-size: 15px; padding: 8px 25px; }
+    nav a { font-size: 12px; padding: 8px 25px; }
     .panel-navegacion { width: 200px; }
 
     .panel-content, .main-content { transform: scale(0.9); }
 }
 /* hasta 1000px */
 @media (max-width: 1000px) { 
-    nav a { font-size: 14px; padding: 6px 20px; }
+    nav a { font-size: 10px; padding: 6px 20px; }
     .panel-navegacion { width: 180px; }
 
     .panel-content, .main-content { transform: scale(0.8); }
 }
 /* hasta 800px */
 @media (max-width: 800px)  { 
-    nav a { font-size: 12px; padding: 5px 15px; }
+    nav a { font-size: 110x; padding: 5px 15px; }
     .panel-navegacion { width: 160px; }
 
     .panel-content, .main-content { transform: scale(0.7); }
@@ -289,9 +292,9 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 
 
 
-
-
-
+/*--------------------------------
+MODULOS
+---------------------------------- */
 
 .module-container{
     background: #ffffff5d;
@@ -302,15 +305,15 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 
 .module-header {
     display: flex;
-    flex-direction: column; /* Cambiamos a columna */
-    gap: 35px; /* Espacio entre título y búsqueda */
+    flex-direction: column;
+    gap: 35px; 
     margin-bottom: 40px;
 }
 
 .module-header h2 {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    font-size: 25px;
+    font-size: 22px;
     font-weight: bold;
 }
 
@@ -426,21 +429,19 @@ MEDIA QUERIES: escala y ajuste de fuentes/paddings
 PANEL LATERAL (oculto al inicio)
 ======================== */
 .side-panel {
-    height: auto;    
     position: fixed;
     top: 0;
-    right: -520px; /* ← lo mantiene oculto al inicio */
+    right: -420px; /* ← lo mantiene oculto al inicio */
     width: 340px;
-    max-height: 100vh;
+    height: 100vh;
     background: #fff;
-    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+    box-shadow: -3px 0 12px rgba(0, 0, 0, 0.15);
     border-radius: 16px 0 0 16px;
-    padding: 15px;
+    padding: 0px;
     transition: right 0.4s ease;
     z-index: 1001;
     overflow-y: auto;
-     box-sizing: border-box;
-}
+    flex-direction: column;}
 
 /* cuando se activa */
 .side-panel.active {
@@ -452,11 +453,15 @@ PANEL LATERAL (oculto al inicio)
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
     background: #ffe6e6;
-    padding: 10px 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px 18px;
+   font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px;
+    
 }
 
 .side-panel-header h3 {
@@ -465,6 +470,7 @@ PANEL LATERAL (oculto al inicio)
     font-size: 18px;
     display: flex;
     align-items: center;
+    margin-left: 20px;
     gap: 8px;
 }
 
@@ -479,23 +485,26 @@ PANEL LATERAL (oculto al inicio)
 
 .btn-close:hover {
     transform: scale(1.2);
+    color: #b30000;
 }
 
 /* formulario dentro del panel */
 .form-agregar {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 25px;
+    padding: 30px;
 }
 
 .form-agregar label {
     font-weight: bold;
     color: #000000;
     margin-top: 8px;
+    font-size: 15px;
 }
 
 .form-agregar input {
-    padding: 6px 8px;
+    padding: 8px 8px;
     border: 0.5px solid #ccc;
     border-radius: 10px;
     font-size: 14px;
