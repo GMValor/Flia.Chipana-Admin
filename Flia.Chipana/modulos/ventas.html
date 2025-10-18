@@ -1,14 +1,4 @@
-<?php
-require_once("../conexion.php");
 
-// Conectar a la base de datos
-$conn = Conexion::conexionBD();
-
-// Consultar clientes
-$sql = "SELECT * FROM vw_mostrar_ventas";
-$stmt = $conn->query($sql);
-$ventas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 
     <!-- CONTENEDOR PRINCIPAL -->
 <div class="module-container">

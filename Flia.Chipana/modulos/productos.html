@@ -1,25 +1,11 @@
-<?php
-require_once("../conexion.php");
-
-// Conectar a la base de datos
-$conn = Conexion::conexionBD();
-
-// Consultar clientes
-$sql = "SELECT * FROM vw_mostrar_forma_pago";
-$stmt = $conn->query($sql);
-$forma_pago = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
-
-
     <!-- CONTENEDOR PRINCIPAL -->
 <div class="module-container">
 
     <!-- HEADER -->
     <div class="module-header">
-        <h2>FORMAS DE PAGO</h2>
+        <h2>PRODUCTOS</h2>
         <div class="search-add">
-            <input type="text" placeholder="Buscar forma de pago" class="search-bar">
+            <input type="text" placeholder="Buscar Producto" class="search-bar">
             <button class="btn-add">Agregar items</button>
         </div>
     </div>
@@ -31,15 +17,25 @@ $forma_pago = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Descripción</th>
+                <th>Descripcion</th>
+                <th>Stock</th>
+                <th>ID Proveedor</th>
+                <th>Precio</th>
+                <th>Costo</th>
+                <th>Fecha Caducidad</th>
                 <th>Acción</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach($forma_pago as $c): ?>
+            <?php foreach($productos as $p): ?>
             <tr>
-                <td><?= htmlspecialchars($c['id_forma_pago']) ?></td>
-                <td><?= htmlspecialchars($c['descripcion']) ?></td>
+                <td><?= htmlspecialchars($p['id_producto']) ?></td>
+                <td><?= htmlspecialchars($p['descripcion']) ?></td>
+                <td><?= htmlspecialchars($p['stock']) ?></td>
+                <td><?= htmlspecialchars($p['id_proveedor']) ?></td>
+                <td><?= htmlspecialchars($p['precio']) ?></td>
+                <td><?= htmlspecialchars($p['costo'] ) ?></td>
+                <td><?= htmlspecialchars($p['fecha_cad'] ) ?></td>
                 <td class="actions">
                     <button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
                     <button class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
