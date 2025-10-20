@@ -9,7 +9,7 @@ async function cargarFormasPago() {
     const tabla = document.getElementById("tabla-forma-pago");
 
     try {
-        const res = await fetchConToken("http://192.168.100.40/api-chipana/public/forma_pago");
+        const res = await fetchConToken("http://192.168.8.113/api-chipana/public/formaspago");
 
         if (!res || !res.ok) throw new Error("Error al obtener formas de pago");
 
@@ -71,7 +71,7 @@ function inicializarAgregarFormaPago() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetchConToken("http://192.168.100.40/api-chipana/public/forma_pago", {
+      const res = await fetchConToken("http://192.168.8.113/api-chipana/public/formaspago", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -170,7 +170,7 @@ function inicializarEditarFormaPago() {
     delete data.id_forma_pago; // No enviamos el id en el body porque va en la URL
 
     try {
-      const res = await fetchConToken(`http://192.168.100.40/api-chipana/public/forma_pago/${id_forma_pago}`, {
+      const res = await fetchConToken(`http://192.168.8.113/api-chipana/public/formaspago/${id_forma_pago}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -229,7 +229,7 @@ function inicializarEliminarFormaPago() {
     if (!idFormaPagoAEliminar) return;
 
     try {
-      const res = await fetchConToken(`http://192.168.100.40/api-chipana/public/forma_pago/${idFormaPagoAEliminar}`, {
+      const res = await fetchConToken(`http://192.168.8.113/api-chipana/public/formaspago/${idFormaPagoAEliminar}`, {
         method: "DELETE"
       });
 

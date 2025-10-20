@@ -18,7 +18,7 @@ function cargarModulo(modulo) {
                     inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 1, 2]); // id, nombre, apellido
                     break;
 
-                       case "formaspago.html":
+                case "formaspago.html":
               // Aquí llamas cargarFormasPago para que cargue la tabla
                     cargarFormasPago();
                     inicializarAgregarFormaPago();

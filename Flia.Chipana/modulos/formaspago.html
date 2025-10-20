@@ -1,4 +1,13 @@
-    <!-- CONTENEDOR PRINCIPAL -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>FormaPago</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- CONTENEDOR PRINCIPAL -->
 <div class="module-container">
 
     <!-- HEADER -->
@@ -21,17 +30,48 @@
                 <th>Acción</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach($forma_pago as $c): ?>
-            <tr>
-                <td><?= htmlspecialchars($c['id_forma_pago']) ?></td>
-                <td><?= htmlspecialchars($c['descripcion']) ?></td>
-                <td class="actions">
-                    <button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
+        <tbody id="tabla-forma-pago"></tbody>
+    </table>
     </table>
     </div>
+</div>
+
+    <!-- PANEL LATERAL AGREGAR -->
+  <div id="overlay" class="overlay"></div>
+  <div id="panel-agregar" class="side-panel">
+    <div class="side-panel-header">
+      <h3><i class="fa-solid fa-user-plus"></i> Agregar Nueva Forma de Pago</h3>
+      <button id="btn-cerrar-panel" class="btn-close">&times;</button>
+    </div>
+    <form id="form-agregar-forma-pago" class="form-agregar">
+      <input type="text" name="descripcion" placeholder="Descripción" required>
+      <button type="submit" class="btn-submit">Agregar</button>
+    </form>
+  </div>
+<div id="mensaje-toast"></div>
+
+<!-- PANEL LATERAL EDITAR -->
+<div id="panel-editar" class="side-panel">
+  <div class="side-panel-header">
+    <h3><i class="fa-solid fa-user-pen"></i> Editar Forma de Pago</h3>
+    <button id="btn-cerrar-panel-editar" class="btn-close">&times;</button>
+  </div>
+  <form id="form-editar-forma-pago" class="form-agregar">
+    <input type="hidden" name="id_forma_pago" />
+    <input type="text" name="descripcion" placeholder="Descripción" required>
+
+    <button type="submit" class="btn-submit">Actualizar</button>
+  </form>
+</div>
+
+
+
+
+<div id="confirmacion-simple">
+  <p>¿Querés eliminar la forma de pago "<strong><span id="nombre-forma-pago-eliminar"></span></strong>"?</p>
+  <button id="btn-si">Sí</button>
+  <button id="btn-no">No</button>
+</div>
+
+</body>
+</html>
