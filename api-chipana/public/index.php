@@ -8,6 +8,7 @@ use Tuupola\Middleware\JwtAuthentication;
 use Firebase\JWT\JWT;
 use App\Conexion;
 use App\ClientesRepository;
+use App\FormasPagoRepository;
 use App\middleware\RoleMiddleware;
 
 
@@ -18,6 +19,7 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/conexion.php';
 require __DIR__ . '/../src/clientesRepository.php';
 require __DIR__ . '/../src/UsuariosRepository.php';
+require __DIR__ . '/../src/FormasPagoRepository.php';
 require __DIR__ . '/../src/middleware/roleMiddleware.php';
 
 
@@ -159,6 +161,67 @@ $app->delete('/clientes/{id_cliente}', function (Request $request, Response $res
         return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     }
 })->add(new RoleMiddleware(['admin']));
+
+
+
+
+
+
+
+//-------------------------------------------------------
+// CRUD FORMAS DE PAGO USANDO CLASE
+//-------------------------------------------------------
+
+//mostrar todos los clietes
+$app->get('/formaspago', function (Request $request, Response $response) {
+    $repo = new FormasPagoRepository();
+    $data = $repo->obtenerTodasLasFormasDePago(); //metodo de la clase Clientes
+    $response->getBody()->write(json_encode($data));   
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+$app->post('/formaspago', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody(), true);   //obtiene lo que envio en el body
+    $repo = new FormasPagoRepository();
+
+     if($repo->crearFormaPago($data)) { //metodo de la clase Cliente
+        $response->getBody()->write(json_encode(["message" => "Forma de Pago creada"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al crear la forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+
+$app->put('/formaspago/{id_forma_pago}', function (Request $request, Response $response, $args) {
+    $id_forma_pago = $args["id_forma_pago"];    //obtiene el id que esta el URL
+    $data = json_decode($request->getBody(), true);  //obtiene los datos enviado en el body
+    $repo = new FormasPagoRepository();
+
+    if($repo->actualizarFormaPago($id_forma_pago, $data)) { 
+        $response->getBody()->write(json_encode(["message" => "Forma de Pago actualizada"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al actualizar la forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+$app->delete('/formaspago/{id_forma_pago}', function (Request $request, Response $response, $args) {
+    $id_forma_pago = $args["id_forma_pago"];   //obtiene el id por la URL
+    $repo = new FormasPagoRepository();
+
+   if($repo->eliminarFormaPago($id_forma_pago)) {
+        $response->getBody()->write(json_encode(["message" => "Forma de Pago eliminada"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al eliminar la forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+})->add(new RoleMiddleware(['admin']));
+
 
 
 $app->addErrorMiddleware (true,true,true);
