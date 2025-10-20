@@ -18,6 +18,15 @@ function cargarModulo(modulo) {
                     inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 1, 2]); // id, nombre, apellido
                     break;
 
+                       case "formaspago.html":
+              // Aquí llamas cargarFormasPago para que cargue la tabla
+                    cargarFormasPago();
+                    inicializarAgregarFormaPago();
+                    inicializarEditarFormaPago();
+                    inicializarEliminarFormaPago();
+                    inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 1, 2]); // id, nombre, apellido
+                    break;
+
                 case "productos.php":
                     inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 1, 2]); //id, descripcion, stock
                     break;
