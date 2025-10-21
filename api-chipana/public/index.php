@@ -9,6 +9,7 @@ use Firebase\JWT\JWT;
 use App\Conexion;
 use App\ClientesRepository;
 use App\FormasPagoRepository;
+use App\ProveedoresRepository;
 use App\middleware\RoleMiddleware;
 
 
@@ -20,6 +21,7 @@ require __DIR__ . '/../src/conexion.php';
 require __DIR__ . '/../src/clientesRepository.php';
 require __DIR__ . '/../src/UsuariosRepository.php';
 require __DIR__ . '/../src/FormasPagoRepository.php';
+require __DIR__ . '/../src/ProveedoresRepository.php';
 require __DIR__ . '/../src/middleware/roleMiddleware.php';
 
 
@@ -222,7 +224,59 @@ $app->delete('/formaspago/{id_forma_pago}', function (Request $request, Response
     }
 })->add(new RoleMiddleware(['admin']));
 
+//-------------------------------------------------------
+// CRUD PROVEEDORES USANDO CLASE
+//-------------------------------------------------------
 
+//mostrar todos los proveedores
+$app->get('/proveedores', function (Request $request, Response $response) {
+    $repo = new ProveedoresRepository();
+    $data = $repo->obtenerTodosLosProvedores(); //metodo de la clase proveedores
+    $response->getBody()->write(json_encode($data));   
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+$app->post('/proveedores', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody(), true);   //obtiene lo que envio en el body
+    $repo = new ProveedoresRepository();
+
+     if($repo->crearProveedor($data)) { //metodo de la clase Proveedores
+        $response->getBody()->write(json_encode(["message" => "Proveedor creado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al crear el proveedor"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+
+$app->put('/proveedores/{id_proveedor}', function (Request $request, Response $response, $args) {
+    $id_proveedor = $args["id_proveedor"];    //obtiene el id que esta el URL
+    $data = json_decode($request->getBody(), true);  //obtiene los datos enviado en el body
+    $repo = new ProveedoresRepository();
+
+    if($repo->actualizarProveedores($id_proveedor, $data)) { 
+        $response->getBody()->write(json_encode(["message" => "Proveedor actualizado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al actualizar el proveedor"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+$app->delete('/proveedores/{id_proveedor}', function (Request $request, Response $response, $args) {
+    $id_proveedor = $args["id_proveedor"];   //obtiene el id por la URL
+    $repo = new ProveedoresRepository();
+
+   if($repo->eliminarProveedor($id_proveedor)) {
+        $response->getBody()->write(json_encode(["message" => "Proveedor eliminado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al eliminar el proveedor"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+})->add(new RoleMiddleware(['admin']));
 
 $app->addErrorMiddleware (true,true,true);
 $app->setBasePath('/api-chipana/public');
