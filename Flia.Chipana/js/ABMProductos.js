@@ -9,7 +9,7 @@ async function cargarProducto() {
     const tabla = document.getElementById("tabla-productos");
 
     try {
-        const res = await fetchConToken("http://172.16.202.232/api-chipana/public/productos");
+        const res = await fetchConToken(`${API_URL}/productos`);
 
         if (!res || !res.ok) throw new Error("Error al obtener productos");
 
@@ -85,7 +85,7 @@ function inicializarAgregarProducto() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetchConToken("http://172.16.202.232/api-chipana/public/producto", {
+      const res = await fetchConToken(`${API_URL}/productos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -207,7 +207,7 @@ function inicializarEditarProducto() {
     delete data.id_producto; // No enviamos el id en el body porque va en la URL
 
     try {
-      const res = await fetchConToken(`http://172.16.202.232/api-chipana/public/productos/${id_producto}`, {
+      const res = await fetchConToken(`${API_URL}/productos/${id_producto}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -275,13 +275,13 @@ function inicializarEliminarProducto() {
     if (!idproductoAEliminar) return;
 
     try {
-      const res = await fetchConToken(`http:///api-chipana/public/producto/${idproductoAEliminar}`, {
+      const res = await fetchConToken(`${API_URL}/productos/${idproductoAEliminar}`, {
         method: "DELETE"
       });
 
       if (!res.ok) throw new Error("Error al eliminar producto");
 
-      mostrarMensaje("prodcuto eliminado exitosamente");
+      mostrarMensaje("producto eliminado exitosamente");
       cargarClientes();
     } catch (error) {
       console.error(error);

@@ -9,7 +9,7 @@ async function cargarProveedores() {
     const tabla = document.getElementById("tabla-proveedores");
 
     try {
-        const res = await fetchConToken("http://192.168.100.88/api-chipana/public/proveedores");
+        const res = await fetchConToken(`${API_URL}/proveedores`);
 
         if (!res || !res.ok) throw new Error("Error al obtener proveedores");
 
@@ -83,7 +83,7 @@ function inicializarAgregarProveedor() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetchConToken("http://192.168.100.88/api-chipana/public/proveedores", {
+      const res = await fetchConToken(`${API_URL}/proveedores`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -201,7 +201,7 @@ function inicializarEditarProveedor() {
     delete data.id_proveedor; // No enviamos el id en el body porque va en la URL
 
     try {
-      const res = await fetchConToken(`http://192.168.100.88/api-chipana/public/proveedores/${id_proveedor}`, {
+      const res = await fetchConToken(`${API_URL}/proveedores/${id_proveedor}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -269,7 +269,7 @@ function inicializarEliminarProveedor() {
     if (!idProveedorAEliminar) return;
 
     try {
-      const res = await fetchConToken(`http://192.168.100.88/api-chipana/public/proveedores/${idProveedorAEliminar}`, {
+      const res = await fetchConToken(`${API_URL}/proveedores/${idProveedorAEliminar}`, {
         method: "DELETE"
       });
 
