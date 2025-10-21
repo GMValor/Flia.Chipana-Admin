@@ -70,7 +70,7 @@
       <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'').slice(0,12);"  name="telefono" placeholder="Teléfono" required>
       <input type="text" name="direccion" placeholder="Dirección" required>
       <input type="email" name="email" placeholder="Email" required>
-      <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="deuda" placeholder="Deuda">
+      <input type="number" oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="deuda" placeholder="Deuda" required>
     <button type="submit" class="btn-submit">Actualizar</button>
   </form>
 </div>
