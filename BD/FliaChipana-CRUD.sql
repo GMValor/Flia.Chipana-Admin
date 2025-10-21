@@ -75,11 +75,18 @@ create procedure spu_crear_producto
 @costo decimal(18,2),
 @fecha_cad date
 as
+begin
+if @stock < 0 or @precio < 0 or @costo < 0
+begin
+	raiserror('No se permiten valores negativos', 16,1)
+	return
+end
 insert into productos	
 values(@id_producto,@descripcion,@stock,@id_proveedor,@precio,@costo,@fecha_cad)
+end
 go
 
-exec spu_crear_producto 1,'Producto Prueba',10,1,1500,3000,'15/12/2026'
+exec spu_crear_producto 11,'Producto Prueba',10,1,0,-45,'15/12/2026'
 ----------------------------------------------------------------
 
 ----Cliente-----------------------------------------------------
@@ -177,8 +184,15 @@ create procedure spu_crear_detalle_venta
 @cantidad decimal(18,2),
 @precio decimal(18,2)
 as
+if @cantidad < 0
+begin
+	raiserror('No se permiten valores negativos',16,1)
+	return
+end
+begin
 insert into detalle_venta
 values(@id_venta,@id_producto,@precio_total,@cantidad,@precio)
+end
 go
 
 exec spu_crear_detalle_ventas 1,1,6000,2,3000
@@ -302,8 +316,15 @@ create procedure spu_modificar_producto
 @costo decimal(18,2),
 @fecha_cad date
 as
-update productos set descripcion=@descripcion,stock=@stock,precio=@precio,costo=@costo,fecha_cad=@fecha_cad
-where id_producto = @id_producto
+if @stock < 0 or @precio < 0 or @costo < 0
+begin
+	raiserror('No se permiten valores negativos',16,1)
+	return;
+end
+begin
+	update productos set descripcion=@descripcion,stock=@stock,precio=@precio,costo=@costo,fecha_cad=@fecha_cad
+	where id_producto = @id_producto
+end
 go
 
 exec spu_modificar_producto 1,'PRUEBA Producto',11,1500,3500,'11/11/2011'
