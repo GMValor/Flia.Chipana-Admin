@@ -312,6 +312,7 @@ create procedure spu_modificar_producto
 @id_producto bigint,
 @descripcion nvarchar(60),
 @stock decimal(18,2),
+@id_proveedor bigint,
 @precio decimal(18,2),
 @costo decimal(18,2),
 @fecha_cad date
@@ -327,7 +328,7 @@ begin
 end
 go
 
-exec spu_modificar_producto 1,'PRUEBA Producto',11,1500,3500,'11/11/2011'
+exec spu_modificar_producto 1,'PRUEBA Producto000',11,1,1500,3500,'11/11/2011'
 -----------------------------------------------------------------
 
 ----Cliente------------------------------------------------------
