@@ -16,7 +16,7 @@ class ProductosRepository {
     // Crear cliente
     public function crearProducto($data) {   //data se llena desde el index en el post
         // Obtener el ID más alto actual
-    $stmt = $this->pdo->query("SELECT MAX(id_producto) AS max_id FROM clientes");
+    $stmt = $this->pdo->query("SELECT MAX(id_producto) AS max_id FROM productos");
     $maxIdRow = $stmt->fetch(\PDO::FETCH_ASSOC);
     $nuevoId = ($maxIdRow['max_id'] ?? 0) + 1;
 

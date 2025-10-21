@@ -10,8 +10,8 @@ use App\Conexion;
 use App\ClientesRepository;
 use App\FormasPagoRepository;
 use App\ProveedoresRepository;
+use App\ProductosRepository;
 use App\middleware\RoleMiddleware;
-
 
 //---------------------
 //RUTAS
@@ -22,6 +22,7 @@ require __DIR__ . '/../src/clientesRepository.php';
 require __DIR__ . '/../src/UsuariosRepository.php';
 require __DIR__ . '/../src/FormasPagoRepository.php';
 require __DIR__ . '/../src/ProveedoresRepository.php';
+require __DIR__ . '/../src/productosRepository.php';
 require __DIR__ . '/../src/middleware/roleMiddleware.php';
 
 
@@ -277,6 +278,62 @@ $app->delete('/proveedores/{id_proveedor}', function (Request $request, Response
         return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     }
 })->add(new RoleMiddleware(['admin']));
+
+
+//-------------------------------------------------------
+// CRUD PRODUCTOS USANDO CLASE
+//-------------------------------------------------------
+
+//mostrar todos los proveedores
+$app->get('/productos', function (Request $request, Response $response) {
+    $repo = new ProductosRepository();
+    $data = $repo->obtenerTodosLosProductos(); //metodo de la clase proveedores
+    $response->getBody()->write(json_encode($data));   
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+$app->post('/productos', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody(), true);   //obtiene lo que envio en el body
+    $repo = new ProductosRepository();
+
+     if($repo->crearProducto($data)) { //metodo de la clase Proveedores
+        $response->getBody()->write(json_encode(["message" => "Producto creado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al crear el producto"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+
+$app->put('/productos/{id_producto}', function (Request $request, Response $response, $args) {
+    $id_producto = $args["id_producto"];    //obtiene el id que esta el URL
+    $data = json_decode($request->getBody(), true);  //obtiene los datos enviado en el body
+    $repo = new ProductosRepository();
+
+    if($repo->actualizarProducto($id_producto, $data)) { 
+        $response->getBody()->write(json_encode(["message" => "Producto actualizado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al actualizar el producto"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+$app->delete('/productos/{id_producto}', function (Request $request, Response $response, $args) {
+    $id_producto = $args["id_producto"];   //obtiene el id por la URL
+    $repo = new ProductosRepository();
+
+   if($repo->eliminarProducto($id_producto)) {
+        $response->getBody()->write(json_encode(["message" => "Producto eliminado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al eliminar el producto"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+})->add(new RoleMiddleware(['admin']));
+
 
 $app->addErrorMiddleware (true,true,true);
 $app->setBasePath('/api-chipana/public');
