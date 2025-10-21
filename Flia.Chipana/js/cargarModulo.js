@@ -27,7 +27,11 @@ function cargarModulo(modulo) {
                     inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 1, 2]); // id, nombre, apellido
                     break;
 
-                case "productos.php":
+                case "productos.html":
+                    cargarProductos();
+                    inicializarAgregarProducto();
+                    inicializarEditarProducto();
+                    inicializarEliminarProducto();
                     inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 1, 2]); //id, descripcion, stock
                     break;
 

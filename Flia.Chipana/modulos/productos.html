@@ -1,11 +1,20 @@
-    <!-- CONTENEDOR PRINCIPAL -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Productos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- CONTENEDOR PRINCIPAL -->
 <div class="module-container">
 
     <!-- HEADER -->
     <div class="module-header">
         <h2>PRODUCTOS</h2>
         <div class="search-add">
-            <input type="text" placeholder="Buscar Producto" class="search-bar">
+            <input type="text" placeholder="Buscar producto" class="search-bar">
             <button class="btn-add">Agregar items</button>
         </div>
     </div>
@@ -26,22 +35,57 @@
                 <th>Acción</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach($productos as $p): ?>
-            <tr>
-                <td><?= htmlspecialchars($p['id_producto']) ?></td>
-                <td><?= htmlspecialchars($p['descripcion']) ?></td>
-                <td><?= htmlspecialchars($p['stock']) ?></td>
-                <td><?= htmlspecialchars($p['id_proveedor']) ?></td>
-                <td><?= htmlspecialchars($p['precio']) ?></td>
-                <td><?= htmlspecialchars($p['costo'] ) ?></td>
-                <td><?= htmlspecialchars($p['fecha_cad'] ) ?></td>
-                <td class="actions">
-                    <button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
+        <tbody id="tabla-productos"></tbody>
     </table>
     </div>
+</div>
+
+    <!-- PANEL LATERAL AGREGAR -->
+  <div id="overlay" class="overlay"></div>
+  <div id="panel-agregar" class="side-panel">
+    <div class="side-panel-header">
+      <h3><i class="fa-solid fa-user-plus"></i> Agregar Nuevo Producto</h3>
+      <button id="btn-cerrar-panel" class="btn-close">&times;</button>
+    </div>
+    <form id="form-agregar-producto" class="form-agregar">
+      <input type="text" name="descripcion" placeholder="Descripcion" required>
+      <input type="number"  min="0"   value="0" oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="stock" placeholder="Stock">
+      <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'').slice(0,12);"  name="id_proveedor" placeholder="ID Proveedor" required>
+      <input type="number"  min="0"   value="0" oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="precio" placeholder="Precio">
+      <input type="number"  min="0"   value="0" oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="costo" placeholder="Costo">
+      <input type="date" name="fecha_cad" placeholder="Fecha Caducidad" required>
+      <button type="submit" class="btn-submit">Agregar</button>
+    </form>
+  </div>
+<div id="mensaje-toast"></div>
+
+<!-- PANEL LATERAL EDITAR -->
+<div id="panel-editar" class="side-panel">
+  <div class="side-panel-header">
+    <h3><i class="fa-solid fa-user-pen"></i> Editar Producto</h3>
+    <button id="btn-cerrar-panel-editar" class="btn-close">&times;</button>
+  </div>
+  <form id="form-editar-producto" class="form-agregar">
+    <input type="hidden" name="id_producto" />
+    <input type="text" name="descripcion" placeholder="Descripcion" required>
+    <input type="number"  min="0"   value="0" oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="stock" placeholder="Stock">
+    <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'').slice(0,12);"  name="id_proveedor" placeholder="ID Proveedor" required>
+    <input type="number"  min="0"   value="0" oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="precio" placeholder="Precio">
+    <input type="number"  min="0"   value="0" oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="costo" placeholder="Costo">
+    <input type="date" name="fecha_cad" placeholder="Fecha Caducidad" required>
+
+    <button type="submit" class="btn-submit">Actualizar</button>
+  </form>
+</div>
+
+
+
+
+<div id="confirmacion-simple">
+  <p>¿Querés eliminar el producto?"<strong><span id="nombre-producto-eliminar"></span></strong>"?</p>
+  <button id="btn-si">Sí</button>
+  <button id="btn-no">No</button>
+</div>
+
+</body>
+</html>

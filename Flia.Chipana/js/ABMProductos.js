@@ -1,11 +1,11 @@
 
 //----------------------------------------------------------
-//                  MOSTRAR UN CLIENTE
+//                  MOSTRAR UN PRODUCTO
 //----------------------------------------------------------
 
 //esta funcion se usa cada ves se carga la pag o cuando necesitas actualizar la tabla
 
-async function cargarProducto() {
+async function cargarProductos() {
     const tabla = document.getElementById("tabla-productos");
 
     try {
@@ -15,19 +15,19 @@ async function cargarProducto() {
 
         const productos = await res.json();
         tabla.innerHTML = "";
-        productos.forEach(productos => {
+        productos.forEach(producto => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
-                <td>${productos.id_producto}</td>
-                <td>${productos.descripcion}</td>
-                <td>${productos.stock}</td>
-                <td>${productos.id_proveedor}</td>
-                <td>${productos.precio}</td>
-                <td>${productos.costo}</td>
-                <td>${productos.fecha_cad}</td>
+                <td>${producto.id_producto}</td>
+                <td>${producto.descripcion}</td>
+                <td>${producto.stock}</td>
+                <td>${producto.id_proveedor}</td>
+                <td>${producto.precio}</td>
+                <td>${producto.costo}</td>
+                <td>${producto.fecha_cad}</td>
                 <td class="actions">
-                    <button class="btn-edit" data-id="${productos.id_producto}"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btn-delete" data-id="${productos.id_producto}"><i class="fa-solid fa-trash-can"></i></button>
+                    <button class="btn-edit" data-id="${producto.id_producto}"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btn-delete" data-id="${producto.id_producto}"><i class="fa-solid fa-trash-can"></i></button>
                 </td>`;
             tabla.appendChild(fila);
         });
@@ -47,10 +47,10 @@ async function cargarProducto() {
 
 
 //----------------------------------------------------------
-//                  AGREGAR UN CLIENTE
+//                  AGREGAR UN PRODUCTO
 //----------------------------------------------------------
 
-//funcion para mostrar el de agregado del cliente exitosamente 
+//funcion para mostrar el de agregado del producto exitosamente 
 function mostrarMensaje(mensaje) {
   const toast = document.getElementById("mensaje-toast");
   toast.textContent = mensaje;
@@ -65,7 +65,7 @@ function mostrarMensaje(mensaje) {
   }, 2500);
 }
 
-// funcion para agregar un cliente
+// funcion para agregar un producto
 function inicializarAgregarProducto() {
   const form = document.getElementById("form-agregar-producto");
   const panel = document.querySelector(".side-panel");
@@ -97,7 +97,7 @@ function inicializarAgregarProducto() {
       form.reset();
       panel.classList.remove("active");
       overlay.classList.remove("active");
-      cargarProducto(); // refresca la tabla
+      cargarProductos(); // refresca la tabla
     } catch (err) {
       console.error(err);
       mostrarMensaje("Error al agregar producto");
@@ -136,7 +136,7 @@ document.addEventListener("click", (e) => {
 
 
 //----------------------------------------------------------
-//                  EDITAR UN CLIENTE
+//                  EDITAR UN PRODUCTO
 //----------------------------------------------------------
 
 
@@ -191,7 +191,7 @@ function inicializarEditarProducto() {
     }
   });
 
-  // Manejar submit para actualizar cliente
+  // Manejar submit para actualizar producto
   formEditar.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -215,11 +215,11 @@ function inicializarEditarProducto() {
 
       if (!res.ok) throw new Error("Error al actualizar producto");
 
-      mostrarMensaje("producto actualizado exitosamente");
+      mostrarMensaje("Producto actualizado exitosamente");
       formEditar.reset();
       panelEditar.classList.remove("active");
       overlay.classList.remove("active");
-      cargarClientes(); // refresca la tabla
+      cargarProductos(); // refresca la tabla
     } catch (err) {
       console.error(err);
       mostrarMensaje("Error al actualizar producto");
@@ -236,7 +236,7 @@ function inicializarEditarProducto() {
 
 
 //----------------------------------------------------------
-//                  ELIMINAR UN CLIENTE
+//                  ELIMINAR UN PRODUCTO
 //----------------------------------------------------------
 
 
@@ -254,11 +254,11 @@ function inicializarEliminarProducto() {
     if (!btnEliminar) return;
 
     idproductoAEliminar = btnEliminar.getAttribute("data-id");
-    if (!idClienteAEliminar) return;
+    if (!idproductoAEliminar) return;
 
     // obtenemos el nombre de la fila para mostrar
     const fila = btnEliminar.closest("tr");
-    const nombreProducto = fila.children[1].textContent + " " + fila.children[2].textContent; // nombre + apellido
+    const nombreProducto = fila.children[1].textContent + " " + fila.children[2].textContent; // nombre + stock
 
     // Lo ponemos en el cartelito
     nombreProductoSpan.textContent = nombreProducto;
@@ -281,8 +281,8 @@ function inicializarEliminarProducto() {
 
       if (!res.ok) throw new Error("Error al eliminar producto");
 
-      mostrarMensaje("producto eliminado exitosamente");
-      cargarClientes();
+      mostrarMensaje("Producto eliminado exitosamente");
+      cargarProductos();
     } catch (error) {
       console.error(error);
       mostrarMensaje("Error al eliminar producto");
@@ -292,7 +292,3 @@ function inicializarEliminarProducto() {
     }
   });
 }
-
-
-
-
