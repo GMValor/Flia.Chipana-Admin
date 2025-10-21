@@ -48,10 +48,10 @@
     <form id="form-agregar-cliente" class="form-agregar">
       <input type="text" name="nombre" placeholder="Nombre" required>
       <input type="text" name="apellido" placeholder="Apellido" required>
-      <input type="text" name="telefono" placeholder="Teléfono" required>
+      <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'').slice(0,10);"  name="telefono" placeholder="Teléfono" required>
       <input type="text" name="direccion" placeholder="Dirección" required>
       <input type="email" name="email" placeholder="Email" required>
-      <input type="number" name="deuda" placeholder="Deuda">
+      <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="deuda" placeholder="Deuda">
       <button type="submit" class="btn-submit">Agregar</button>
     </form>
   </div>
@@ -66,11 +66,11 @@
   <form id="form-editar-cliente" class="form-agregar">
     <input type="hidden" name="id_cliente" />
     <input type="text" name="nombre" placeholder="Nombre" required>
-    <input type="text" name="apellido" placeholder="Apellido" required>
-    <input type="text" name="telefono" placeholder="Teléfono" required>
-    <input type="text" name="direccion" placeholder="Dirección" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="number" name="deuda" placeholder="Deuda">
+      <input type="text" name="apellido" placeholder="Apellido" required>
+      <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'').slice(0,10);"  name="telefono" placeholder="Teléfono" required>
+      <input type="text" name="direccion" placeholder="Dirección" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="deuda" placeholder="Deuda">
     <button type="submit" class="btn-submit">Actualizar</button>
   </form>
 </div>

@@ -11,7 +11,7 @@ form.addEventListener("submit", async (e) => {
 
     try {
         const credentials = btoa(`${nombre}:${password}`);
-        const res = await fetch("http://192.168.8.113/api-chipana/public/login", {
+        const res = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: {
                 "Authorization": `Basic ${credentials}`

@@ -9,7 +9,7 @@ async function cargarClientes() {
     const tabla = document.getElementById("tabla-clientes");
 
     try {
-        const res = await fetchConToken("http://192.168.8.113/api-chipana/public/clientes");
+        const res = await fetchConToken(`${API_URL}/clientes`);
 
         if (!res || !res.ok) throw new Error("Error al obtener clientes");
 
@@ -85,7 +85,7 @@ function inicializarAgregarCliente() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetchConToken("http://192.168.8.113/api-chipana/public/clientes", {
+      const res = await fetchConToken(`${API_URL}/clientes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -207,7 +207,7 @@ function inicializarEditarCliente() {
     delete data.id_cliente; // No enviamos el id en el body porque va en la URL
 
     try {
-      const res = await fetchConToken(`http://192.168.8.113/api-chipana/public/clientes/${id_cliente}`, {
+      const res = await fetchConToken(`${API_URL}/clientes/${id_cliente}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -275,7 +275,7 @@ function inicializarEliminarCliente() {
     if (!idClienteAEliminar) return;
 
     try {
-      const res = await fetchConToken(`http://192.168.8.113/api-chipana/public/clientes/${idClienteAEliminar}`, {
+      const res = await fetchConToken(`${API_URL}/clientes/${idClienteAEliminar}`, {
         method: "DELETE"
       });
 
