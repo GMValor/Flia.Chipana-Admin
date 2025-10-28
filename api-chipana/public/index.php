@@ -11,6 +11,7 @@ use App\ClientesRepository;
 use App\FormasPagoRepository;
 use App\ProveedoresRepository;
 use App\ProductosRepository;
+use App\ConsultasRepository;
 use App\middleware\RoleMiddleware;
 
 //---------------------
@@ -23,6 +24,7 @@ require __DIR__ . '/../src/UsuariosRepository.php';
 require __DIR__ . '/../src/FormasPagoRepository.php';
 require __DIR__ . '/../src/ProveedoresRepository.php';
 require __DIR__ . '/../src/productosRepository.php';
+require __DIR__ . '/../src/ConsultasRepository.php';
 require __DIR__ . '/../src/middleware/roleMiddleware.php';
 
 
@@ -334,6 +336,59 @@ $app->delete('/productos/{id_producto}', function (Request $request, Response $r
     }
 })->add(new RoleMiddleware(['admin']));
 
+//-------------------------------------------------------
+// CONSULTAS
+//-------------------------------------------------------
+
+$app->get('/productosproveedores', function (Request $request, Response $response) {
+    $repo = new ConsultasRepository();
+    $data = $repo->obtenerTodosLosProductosConProveedores(); //metodo de la clase proveedores
+    $response->getBody()->write(json_encode($data));   
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/productosmasvendidos/{fecha_desde}/{fecha_hasta}', function (Request $request, Response $response, array $args){
+    $fecha_desde = $args["fecha_desde"];
+    $fecha_hasta = $args["fecha_hasta"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->productoMasVendido($fecha_desde , $fecha_hasta);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/ventaporfecha/{fecha_desde}/{fecha_hasta}', function (Request $request, Response $response, array $args){
+    $fecha_desde = $args["fecha_desde"];
+    $fecha_hasta = $args["fecha_hasta"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->ventaPorFecha($fecha_desde , $fecha_hasta);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/productoproveedor/{id_proveedor}', function (Request $request, Response $response, array $args){
+    $id_proveedor = $args["id_proveedor"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->productoPorProveedor($id_proveedor);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/productofechacaducidad/{fecha_desde}/{fecha_hasta}', function (Request $request, Response $response, array $args){
+    $fecha_desde = $args["fecha_desde"];
+    $fecha_hasta = $args["fecha_hasta"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->productosFechaCaducidad($fecha_desde , $fecha_hasta);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
 
 $app->addErrorMiddleware (true,true,true);
 $app->setBasePath('/api-chipana/public');
