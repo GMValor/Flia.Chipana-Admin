@@ -42,10 +42,6 @@ sqlsrv
 
 WARNING: Module sqlsrv ini file doesn't exist under /etc/php/8.2/mods-available
 
-WARNING: Module sqlsrv ini file doesn't exist under /etc/php/8.2/mods-available
-
-WARNING: Module pdo_sqlsrv ini file doesn't exist under /etc/php/8.2/mods-available
-
 WARNING: Module pdo_sqlsrv ini file doesn't exist under /etc/php/8.2/mods-available
 
 // Creamos nosotros el archivo .init de sqlsrv y pdo_sqlsrv
