@@ -47,6 +47,9 @@ function cargarModulo(modulo) {
                 case "ventas.php":
                     inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 2, 4]); // id, fecha, total
                     break;
+                
+                case "consultas.html":
+                    break;
 
                 default:
                     inicializarBuscadorGlobal(".search-bar", ".custom-table"); // genérico para formas de pago por ej
