@@ -11,6 +11,7 @@ use App\ClientesRepository;
 use App\FormasPagoRepository;
 use App\ProveedoresRepository;
 use App\ProductosRepository;
+use App\VentasRepository;
 use App\ConsultasRepository;
 use App\middleware\RoleMiddleware;
 
@@ -24,6 +25,7 @@ require __DIR__ . '/../src/UsuariosRepository.php';
 require __DIR__ . '/../src/FormasPagoRepository.php';
 require __DIR__ . '/../src/ProveedoresRepository.php';
 require __DIR__ . '/../src/productosRepository.php';
+require __DIR__ . '/../src/VentasRepository.php';
 require __DIR__ . '/../src/ConsultasRepository.php';
 require __DIR__ . '/../src/middleware/roleMiddleware.php';
 
@@ -332,6 +334,60 @@ $app->delete('/productos/{id_producto}', function (Request $request, Response $r
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     } else {
         $response->getBody()->write(json_encode(["message" => "Error al eliminar el producto"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+})->add(new RoleMiddleware(['admin']));
+
+//-------------------------------------------------------
+// CRUD VENTAS USANDO CLASE
+//-------------------------------------------------------
+
+//mostrar todas las ventas
+$app->get('/ventas', function (Request $request, Response $response) {
+    $repo = new VentasRepository();
+    $data = $repo->obtenerTodasLasVentas(); //metodo de la clase Ventas
+    $response->getBody()->write(json_encode($data));   
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+$app->post('/ventas', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody(), true);   //obtiene lo que envio en el body
+    $repo = new VentasRepository();
+
+     if($repo->crearVenta($data)) { //metodo de la clase Cliente
+        $response->getBody()->write(json_encode(["message" => "Venta creada"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al crear la venta"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+
+$app->put('/ventas/{id_venta}', function (Request $request, Response $response, $args) {
+    $id_ventas = $args["id_ventas"];    //obtiene el id que esta el URL
+    $data = json_decode($request->getBody(), true);  //obtiene los datos enviado en el body
+    $repo = new VentasRepository();
+
+    if($repo->actualizarVenta($id_venta, $data)) { 
+        $response->getBody()->write(json_encode(["message" => "Venta actualizada"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al actualizar la venta"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+$app->delete('/ventas/{id_venta}', function (Request $request, Response $response, $args) {
+    $id_venta = $args["id_venta"];   //obtiene el id por la URL
+    $repo = new VentasRepository();
+
+   if($repo->eliminarVenta($id_venta)) {
+        $response->getBody()->write(json_encode(["message" => "Venta eliminada"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al eliminar la venta"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     }
 })->add(new RoleMiddleware(['admin']));

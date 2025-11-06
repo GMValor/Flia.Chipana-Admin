@@ -195,7 +195,7 @@ values(@id_venta,@id_producto,@precio_total,@cantidad,@precio)
 end
 go
 
-exec spu_crear_detalle_ventas 1,1,6000,2,3000
+exec spu_crear_detalle_venta 1,1,6000,2,3000
 -----------------------------------------------------------------
 
 
