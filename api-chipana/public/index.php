@@ -103,7 +103,7 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 // MIDDLEWARE JWT
 //-------------------------------------------------------
 $app->add(new JwtAuthentication([
-    "secret" => "Yasminarevalo2005",
+    "secret" => "FliaChipana2025",
     "attribute" => "token",
     "path" => ["/"],
     "ignore" => ["/api-chipana/public/login"],
@@ -441,6 +441,37 @@ $app->get('/productofechacaducidad/{fecha_desde}/{fecha_hasta}', function (Reque
 
     $repo = new ConsultasRepository();
     $data = $repo->productosFechaCaducidad($fecha_desde , $fecha_hasta);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/ventaformapago/{id_forma_pago}', function (Request $request, Response $response, array $args){
+    $id_forma_pago = $args["id_forma_pago"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->ventaFormaPago($id_forma_pago);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/ingresosformapago/{id_forma_pago}', function (Request $request, Response $response, array $args){
+    $id_forma_pago = $args["id_forma_pago"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->ingresosFormaPago($id_forma_pago);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/ingresosfecha/{fecha_desde}/{fecha_hasta}', function (Request $request, Response $response, array $args){
+    $fecha_desde = $args["fecha_desde"];
+    $fecha_hasta = $args["fecha_hasta"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->ingresosPorFecha($fecha_desde , $fecha_hasta);
 
     $response->getBody()->write(json_encode($data));
     return $response->withHeader('Content-Type', 'application/json');
