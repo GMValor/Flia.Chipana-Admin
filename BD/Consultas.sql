@@ -66,9 +66,8 @@ where detalle_forma_pago.id_forma_pago = @id_forma_pago
 create procedure spu_ingresos_por_forma_pago
 @id_forma_pago bigint
 as
-select detalle_forma_pago.id_forma_pago,descripcion,SUM(total) as "Ingresos Totales" from ventas
-inner join detalle_forma_pago on ventas.id_venta = detalle_forma_pago.id_venta
-inner join forma_pago on detalle_forma_pago.id_forma_pago = forma_pago.id_forma_pago
+select detalle_forma_pago.id_forma_pago, descripcion,SUM(importe) as "Ingresos totales" from detalle_forma_pago
+inner join forma_pago on detalle_forma_pago.id_forma_pago = detalle_forma_pago.id_forma_pago
 where detalle_forma_pago.id_forma_pago = @id_forma_pago
 group by detalle_forma_pago.id_forma_pago,descripcion
 --------------------------------------------------------
