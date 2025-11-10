@@ -67,7 +67,8 @@ id_producto bigint,
 foreign key (id_producto) references productos(id_producto),
 precio_total decimal(18,2),
 cantidad decimal(18,2),
-precio decimal(18,2))
+precio decimal(18,2),
+primary key (id_venta,id_producto))
 go
 
 
@@ -76,6 +77,7 @@ id_venta bigint,
 foreign key (id_venta) references ventas(id_venta),
 id_forma_pago int,
 foreign key (id_forma_pago) references forma_pago(id_forma_pago),
-importe decimal(18,2))
+importe decimal(18,2),
+primary key(id_venta,id_forma_pago))
 go
 ---------------------------------------------------------------
