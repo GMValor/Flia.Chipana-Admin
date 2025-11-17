@@ -25,6 +25,7 @@ require __DIR__ . '/../src/UsuariosRepository.php';
 require __DIR__ . '/../src/FormasPagoRepository.php';
 require __DIR__ . '/../src/ProveedoresRepository.php';
 require __DIR__ . '/../src/productosRepository.php';
+// require __DIR__ . '/../src/DetalleFormasPagoRepository.php';
 require __DIR__ . '/../src/VentasRepository.php';
 require __DIR__ . '/../src/ConsultasRepository.php';
 require __DIR__ . '/../src/middleware/roleMiddleware.php';
@@ -170,6 +171,71 @@ $app->delete('/clientes/{id_cliente}', function (Request $request, Response $res
 })->add(new RoleMiddleware(['admin']));
 
 
+
+//-------------------------------------------------------
+// CRUD DETALLE FORMAS DE PAGO USANDO CLASE
+//-------------------------------------------------------
+
+//-------------------------------------------------------
+// CRUD DETALLE FORMAS DE PAGO
+//-------------------------------------------------------
+
+// Mostrar todos los detalles de forma de pago
+$app->get('/detalleformaspago', function (Request $request, Response $response) {
+    $repo = new FormasPagoRepository();
+    $data = $repo->obtenerTodosLosDetallesFormaDePago();
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+// Crear un detalle de forma de pago
+$app->post('/detalleformaspago', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody(), true);
+    $repo = new FormasPagoRepository();
+
+    if ($repo->crearDetalleFormaPago($data)) {
+        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago creado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al crear detalle de forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+
+// Actualizar un detalle de forma de pago
+$app->put('/detalleformaspago/{id_forma_pago}/{id_venta}', function (Request $request, Response $response, $args) {
+    $id_forma_pago = $args["id_forma_pago"];
+    $id_venta      = $args["id_venta"];
+
+    $data = json_decode($request->getBody(), true);
+    $repo = new FormasPagoRepository();
+    $data['id_forma_pago'] = $id_forma_pago;
+    $data['id_venta']      = $id_venta;
+
+    if ($repo->actualizarDetalleFormaPago($id_forma_pago, $id_venta, $data)) {
+        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago actualizado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al actualizar detalle de forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+$app->delete('/detalleformaspago/{id_forma_pago}/{id_venta}', function (Request $request, Response $response, $args) {
+    $id_forma_pago = $args["id_forma_pago"];
+    $id_venta      = $args["id_venta"];
+    $repo = new FormasPagoRepository();
+
+    if ($repo->eliminarDetalleFormaPago($id_forma_pago, $id_venta)) {
+        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago eliminado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al eliminar detalle de forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
 
 
 
