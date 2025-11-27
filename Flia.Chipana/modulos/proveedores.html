@@ -45,7 +45,7 @@
     </div>
     <form id="form-agregar-proveedor" class="form-agregar">
       <input type="text" name="nombre" placeholder="Nombre" required>
-      <input type="number"  min="0" max="12"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="telefono" placeholder="Teléfono" required>
+      <input type="number"  min="0"   oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="telefono" placeholder="Teléfono" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="text" name="direccion" placeholder="Dirección" required>
       <button type="submit" class="btn-submit">Agregar</button>
@@ -62,7 +62,7 @@
   <form id="form-editar-proveedor" class="form-agregar">
     <input type="hidden" name="id_proveedor" />
     <input type="text" name="nombre" placeholder="Nombre" required>
-    <input type="number"  min="0" max="12"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="telefono" placeholder="Teléfono" required>
+    <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="telefono" placeholder="Teléfono" required>
     <input type="email" name="email" placeholder="Email" required>
     <input type="text" name="direccion" placeholder="Dirección" required>
     <button type="submit" class="btn-submit">Actualizar</button>
