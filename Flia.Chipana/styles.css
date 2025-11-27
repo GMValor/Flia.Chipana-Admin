@@ -632,3 +632,133 @@ PANEL LATERAL (oculto al inicio)
     font-weight: bold;
 
 }
+
+
+
+
+
+
+/* --------------------------- */
+/* consultas */
+/* ---------------------------- */
+
+.consultas-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.tarjetas-consultas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tarjeta-consulta {
+    width: 220px;
+    height: 140px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tarjeta-consulta:hover {
+    transform: scale(1.05);
+    border-color: #f02f2fc4;
+}
+
+.consulta-detalle {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* estilo de las consultas, adentro */
+
+/* --- Botón Volver --- */
+.btn-volver {
+    display: inline-block;
+    background: transparent;
+    color: #b10713;
+    border: 2px solid #b10713;
+    border-radius: 8px;
+    padding: 7px 15px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-volver:hover {
+    background: #b10713;
+    color: #fff;
+}
+
+/* --- Encabezado --- */
+#consulta-detalle h3 {
+    color: #b10713;
+    margin-bottom: 20px;
+    font-size: 1.7em;
+}
+
+/* --- Formularios de consulta (inputs y labels) --- */
+.form-consulta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-consulta label {
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    text-align: left;
+}
+
+.form-consulta input[type="date"],
+.form-consulta input[type="number"],
+.form-consulta input[type="text"] {
+    margin-top: 5px;
+    padding: 7px 7px;
+    border: 1.5px solid #cccccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    min-width: 160px;
+    text-align: center;
+}
+
+.form-consulta input:focus {
+    border-color: #b10713;
+    box-shadow: 0 0 5px rgba(177, 7, 19, 0.3);
+    outline: none;
+}
+/* --- Botones principales (Consultar) --- */
+#consulta-detalle button:not(.btn-volver) {
+    background: #b10713;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+#consulta-detalle button:not(.btn-volver):hover {
+    background: #e63946;
+}
+
+/* --- Espaciado del resultado --- */
+#resultado {
+    margin-top: 30px;
+}

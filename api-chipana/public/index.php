@@ -26,6 +26,7 @@ require __DIR__ . '/../src/UsuariosRepository.php';
 require __DIR__ . '/../src/FormasPagoRepository.php';
 require __DIR__ . '/../src/ProveedoresRepository.php';
 require __DIR__ . '/../src/productosRepository.php';
+// require __DIR__ . '/../src/DetalleFormasPagoRepository.php';
 require __DIR__ . '/../src/VentasRepository.php';
 require __DIR__ . '/../src/DetalleVentaRepository.php';
 require __DIR__ . '/../src/ConsultasRepository.php';
@@ -105,7 +106,7 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 // MIDDLEWARE JWT
 //-------------------------------------------------------
 $app->add(new JwtAuthentication([
-    "secret" => "Yasminarevalo2005",
+    "secret" => "FliaChipana2025",
     "attribute" => "token",
     "path" => ["/"],
     "ignore" => ["/api-chipana/public/login"],
@@ -172,6 +173,71 @@ $app->delete('/clientes/{id_cliente}', function (Request $request, Response $res
 })->add(new RoleMiddleware(['admin']));
 
 
+
+//-------------------------------------------------------
+// CRUD DETALLE FORMAS DE PAGO USANDO CLASE
+//-------------------------------------------------------
+
+//-------------------------------------------------------
+// CRUD DETALLE FORMAS DE PAGO
+//-------------------------------------------------------
+
+// Mostrar todos los detalles de forma de pago
+$app->get('/detalleformaspago', function (Request $request, Response $response) {
+    $repo = new FormasPagoRepository();
+    $data = $repo->obtenerTodosLosDetallesFormaDePago();
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+// Crear un detalle de forma de pago
+$app->post('/detalleformaspago', function (Request $request, Response $response) {
+    $data = json_decode($request->getBody(), true);
+    $repo = new FormasPagoRepository();
+
+    if ($repo->crearDetalleFormaPago($data)) {
+        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago creado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al crear detalle de forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+
+// Actualizar un detalle de forma de pago
+$app->put('/detalleformaspago/{id_forma_pago}/{id_venta}', function (Request $request, Response $response, $args) {
+    $id_forma_pago = $args["id_forma_pago"];
+    $id_venta      = $args["id_venta"];
+
+    $data = json_decode($request->getBody(), true);
+    $repo = new FormasPagoRepository();
+    $data['id_forma_pago'] = $id_forma_pago;
+    $data['id_venta']      = $id_venta;
+
+    if ($repo->actualizarDetalleFormaPago($id_forma_pago, $id_venta, $data)) {
+        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago actualizado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al actualizar detalle de forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
+$app->delete('/detalleformaspago/{id_forma_pago}/{id_venta}', function (Request $request, Response $response, $args) {
+    $id_forma_pago = $args["id_forma_pago"];
+    $id_venta      = $args["id_venta"];
+    $repo = new FormasPagoRepository();
+
+    if ($repo->eliminarDetalleFormaPago($id_forma_pago, $id_venta)) {
+        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago eliminado"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode(["message" => "Error al eliminar detalle de forma de pago"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
 
 
 
@@ -357,7 +423,7 @@ $app->post('/ventas', function (Request $request, Response $response) {
     $data = json_decode($request->getBody(), true);   //obtiene lo que envio en el body
     $repo = new VentasRepository();
 
-     if($repo->crearVenta($data)) { //metodo de la clase Cliente
+     if($repo->crearVenta($data)) { //metodo de la clase Ventas
         $response->getBody()->write(json_encode(["message" => "Venta creada"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
     } else {
@@ -499,6 +565,37 @@ $app->get('/productofechacaducidad/{fecha_desde}/{fecha_hasta}', function (Reque
 
     $repo = new ConsultasRepository();
     $data = $repo->productosFechaCaducidad($fecha_desde , $fecha_hasta);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/ventaformapago/{id_forma_pago}', function (Request $request, Response $response, array $args){
+    $id_forma_pago = $args["id_forma_pago"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->ventaFormaPago($id_forma_pago);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/ingresosformapago/{id_forma_pago}', function (Request $request, Response $response, array $args){
+    $id_forma_pago = $args["id_forma_pago"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->ingresosFormaPago($id_forma_pago);
+
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+$app->get('/ingresosfecha/{fecha_desde}/{fecha_hasta}', function (Request $request, Response $response, array $args){
+    $fecha_desde = $args["fecha_desde"];
+    $fecha_hasta = $args["fecha_hasta"];
+
+    $repo = new ConsultasRepository();
+    $data = $repo->ingresosPorFecha($fecha_desde , $fecha_hasta);
 
     $response->getBody()->write(json_encode($data));
     return $response->withHeader('Content-Type', 'application/json');

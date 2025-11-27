@@ -50,3 +50,36 @@ as
 select id_producto,descripcion,stock,precio,costo,fecha_cad from productos
 where fecha_cad between @fecha_desde and @fecha_hasta
 --------------------------------------------------------
+
+
+--Filtrar venta por metodo de pago----------------------
+create procedure spu_venta_por_forma_pago 
+@id_forma_pago bigint
+as
+select id_venta,detalle_forma_pago.id_forma_pago,forma_pago.descripcion,importe from detalle_forma_pago
+inner join forma_pago on detalle_forma_pago.id_forma_pago = forma_pago.id_forma_pago
+where detalle_forma_pago.id_forma_pago = @id_forma_pago
+--------------------------------------------------------
+
+
+--Mostrar total de ingresos segun el metodo de pago-----
+create procedure spu_ingresos_por_forma_pago
+@id_forma_pago bigint
+as
+select detalle_forma_pago.id_forma_pago, descripcion,SUM(importe) as "Ingresos totales" from detalle_forma_pago
+inner join forma_pago on detalle_forma_pago.id_forma_pago = forma_pago.id_forma_pago
+where detalle_forma_pago.id_forma_pago = @id_forma_pago
+group by detalle_forma_pago.id_forma_pago,descripcion
+--------------------------------------------------------
+
+
+--Mostrar ingresos totales en un rango de fechas--------
+create procedure spu_ingresos_por_fecha
+@fecha_desde date,
+@fecha_hasta date
+as
+select  fecha,SUM(total) as "Ingresos Totales" from ventas
+where fecha between @fecha_desde and @fecha_hasta
+group by fecha
+--------------------------------------------------------
+
