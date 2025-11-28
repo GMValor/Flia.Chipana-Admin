@@ -70,7 +70,7 @@ $header = $request->getHeaderLine('Authorization');
     $role = $user['rol'];
 
 
-    $key = "Yasminarevalo2005";      
+    $key = "FliaChipana2025";      
     $payload = [
         "iss" => "example.com",
         "aud" => "example.com",
@@ -491,7 +491,7 @@ $app->put('/detalleVenta/{id_venta}/{id_producto}', function (Request $request, 
     $id_venta = $args["id_venta"];
     $id_producto = $args["id_producto"];    //obtiene el id que esta el URL
     $data = json_decode($request->getBody(), true);  //obtiene los datos enviado en el body
-    $repo = new ProductosRepository();
+    $repo = new DetalleVentaRepository();
 
     if($repo->actualizarDetalleVenta($id_venta, $id_producto, $data)) { 
         $response->getBody()->write(json_encode(["message" => "Detalle de venta actualizado"]));
@@ -508,7 +508,7 @@ $app->delete('/detalleVenta/{id_venta}/{id_producto}', function (Request $reques
     $repo = new DetalleVentaRepository();
 
    if($repo->eliminarDetalleVenta($id_venta, $id_producto)) {
-        $response->getBody()->write(json_encode(["message" => "detalla eliminado"]));
+        $response->getBody()->write(json_encode(["message" => "Detalle de venta eliminado"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     } else {
         $response->getBody()->write(json_encode(["message" => "Error al eliminar el detalle de venta"]));

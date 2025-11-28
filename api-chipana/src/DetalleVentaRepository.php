@@ -18,11 +18,10 @@ class DetalleVentaRepository {
         // Obtener el ID más alto actual
      $stmt = $this->pdo->query("SELECT MAX(id_venta) AS max_id FROM detalle_venta");
     $maxIdRow = $stmt->fetch(\PDO::FETCH_ASSOC);
-    $nuevoId = ($maxIdRow['max_id'] ?? 0) + 1;
 
     $stmt = $this->pdo->prepare("EXEC spu_crear_detalle_venta  @id_venta =:id_venta, @id_producto = :id_producto, @precio_total = :precio_total, @cantidad = :cantidad, @precio = :precio");
 
-    $stmt->bindParam(':id_venta', $nuevoId);
+    $stmt->bindParam(':id_venta', $data['id_venta']);
     $stmt->bindParam(':id_producto', $data['id_producto']);
     $stmt->bindParam(':precio_total', $data['precio_total']);
     $stmt->bindParam(':cantidad', $data['cantidad']);
@@ -32,19 +31,19 @@ class DetalleVentaRepository {
   return $stmt->execute();
     }
 
-    // Actualizar forma de pago
-    public function actualizarDetalleVenta($id_venta, $data) {
+    // Actualizar detalle de venta
+    public function actualizarDetalleVenta($id_venta,$id_producto, $data) {
         $sql = "EXEC spu_modificar_detalle_venta @id_venta =:id_venta, @id_producto = :id_producto, @precio_total = :precio_total, @cantidad = :cantidad, @precio = :precio";
         $stmt = $this->pdo->prepare($sql);
 
-        $data["@id_venta"] = $id_venta; //agregar el id de la forma de pago en el array y luego se ejecuta todo
+        $data["id_venta"] = $id_venta;
+        $data["id_producto"] = $id_producto;
         return $stmt->execute($data);
     }
 
     // Eliminar forma de pago
-    public function eliminarDetalleVenta($id_venta) {
-        $stmt = $this->pdo->prepare("EXEC spu_eliminar_detalle_venta @id_venta =:@id_venta, @id_producto =:id_producto");
-        return $stmt->execute(["id_venta" => $id_venta]);
-        return $stmt->execute(["id_producto" => $id_producto]);
+    public function eliminarDetalleVenta($id_venta, $id_producto) {
+        $stmt = $this->pdo->prepare("EXEC spu_eliminar_detalle_venta @id_venta =:id_venta, @id_producto =:id_producto");
+        return $stmt->execute(["id_venta" => $id_venta, "id_producto" => $id_producto]);
     }
 }
