@@ -9,6 +9,7 @@ use Firebase\JWT\JWT;
 use App\Conexion;
 use App\ClientesRepository;
 use App\FormasPagoRepository;
+use App\DetalleFormaPagoRepository;
 use App\ProveedoresRepository;
 use App\VentasRepository;
 use App\DetalleVentaRepository;
@@ -26,7 +27,7 @@ require __DIR__ . '/../src/UsuariosRepository.php';
 require __DIR__ . '/../src/FormasPagoRepository.php';
 require __DIR__ . '/../src/ProveedoresRepository.php';
 require __DIR__ . '/../src/productosRepository.php';
-// require __DIR__ . '/../src/DetalleFormasPagoRepository.php';
+require __DIR__ . '/../src/DetalleFormaPagoRepository.php';
 require __DIR__ . '/../src/VentasRepository.php';
 require __DIR__ . '/../src/DetalleVentaRepository.php';
 require __DIR__ . '/../src/ConsultasRepository.php';
@@ -183,8 +184,8 @@ $app->delete('/clientes/{id_cliente}', function (Request $request, Response $res
 //-------------------------------------------------------
 
 // Mostrar todos los detalles de forma de pago
-$app->get('/detalleformaspago', function (Request $request, Response $response) {
-    $repo = new FormasPagoRepository();
+$app->get('/detalleformapago', function (Request $request, Response $response) {
+    $repo = new DetalleFormaPagoRepository();
     $data = $repo->obtenerTodosLosDetallesFormaDePago();
     $response->getBody()->write(json_encode($data));
     return $response->withHeader('Content-Type', 'application/json');
@@ -192,9 +193,9 @@ $app->get('/detalleformaspago', function (Request $request, Response $response) 
 
 
 // Crear un detalle de forma de pago
-$app->post('/detalleformaspago', function (Request $request, Response $response) {
+$app->post('/detalleformapago', function (Request $request, Response $response) {
     $data = json_decode($request->getBody(), true);
-    $repo = new FormasPagoRepository();
+    $repo = new DetalleFormaPagoRepository();
 
     if ($repo->crearDetalleFormaPago($data)) {
         $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago creado"]));
@@ -207,30 +208,31 @@ $app->post('/detalleformaspago', function (Request $request, Response $response)
 
 
 // Actualizar un detalle de forma de pago
-$app->put('/detalleformaspago/{id_forma_pago}/{id_venta}', function (Request $request, Response $response, $args) {
+$app->put('/detalleformapago/{id_venta}/{id_forma_pago}', function (Request $request, Response $response, $args) {
+    $id_venta = $args["id_venta"];
     $id_forma_pago = $args["id_forma_pago"];
-    $id_venta      = $args["id_venta"];
 
     $data = json_decode($request->getBody(), true);
-    $repo = new FormasPagoRepository();
+    $repo = new DetalleFormaPagoRepository();
+    
+    $data['id_venta'] = $id_venta;
     $data['id_forma_pago'] = $id_forma_pago;
-    $data['id_venta']      = $id_venta;
 
-    if ($repo->actualizarDetalleFormaPago($id_forma_pago, $id_venta, $data)) {
-        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago actualizado"]));
+    if ($repo->actualizarDetalleFormaPago($id_venta, $id_forma_pago, $data)) {
+        $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago actualizada"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     } else {
-        $response->getBody()->write(json_encode(["message" => "Error al actualizar detalle de forma de pago"]));
+        $response->getBody()->write(json_encode(["message" => "Error al actualizar el detalle de forma de pago"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     }
 });
 
-$app->delete('/detalleformaspago/{id_forma_pago}/{id_venta}', function (Request $request, Response $response, $args) {
+$app->delete('/detalleformapago/{id_venta}/{id_forma_pago}', function (Request $request, Response $response, $args) {
+    $id_venta = $args["id_venta"];
     $id_forma_pago = $args["id_forma_pago"];
-    $id_venta      = $args["id_venta"];
-    $repo = new FormasPagoRepository();
+    $repo = new DetalleFormaPagoRepository();
 
-    if ($repo->eliminarDetalleFormaPago($id_forma_pago, $id_venta)) {
+    if ($repo->eliminarDetalleFormaPago($id_venta, $id_forma_pago)) {
         $response->getBody()->write(json_encode(["message" => "Detalle de forma de pago eliminado"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     } else {
