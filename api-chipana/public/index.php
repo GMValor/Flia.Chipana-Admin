@@ -489,13 +489,14 @@ $app->post('/detalleVenta', function (Request $request, Response $response) {
     }
 });
 
-$app->put('/detalleVenta/{id_venta}/{id_producto}', function (Request $request, Response $response, $args) {
+$app->put('/detalleVenta/{id_renglon}/{id_venta}/{id_producto}', function (Request $request, Response $response, $args) {
+    $id_renglon = $args["id_renglon"];
     $id_venta = $args["id_venta"];
     $id_producto = $args["id_producto"];    //obtiene el id que esta el URL
     $data = json_decode($request->getBody(), true);  //obtiene los datos enviado en el body
     $repo = new DetalleVentaRepository();
 
-    if($repo->actualizarDetalleVenta($id_venta, $id_producto, $data)) { 
+    if($repo->actualizarDetalleVenta($id_renglon, $id_venta, $id_producto, $data)) { 
         $response->getBody()->write(json_encode(["message" => "Detalle de venta actualizado"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     } else {
@@ -504,12 +505,13 @@ $app->put('/detalleVenta/{id_venta}/{id_producto}', function (Request $request, 
     }
 });
 
-$app->delete('/detalleVenta/{id_venta}/{id_producto}', function (Request $request, Response $response, $args) {
+$app->delete('/detalleVenta/{id_renglon}/{id_venta}/{id_producto}', function (Request $request, Response $response, $args) {
+    $id_renglon = $args["id_renglon"];
     $id_venta = $args["id_venta"];
     $id_producto = $args["id_producto"]; //obtiene el id por la URL
     $repo = new DetalleVentaRepository();
 
-   if($repo->eliminarDetalleVenta($id_venta, $id_producto)) {
+   if($repo->eliminarDetalleVenta($id_renglon, $id_venta, $id_producto)) {
         $response->getBody()->write(json_encode(["message" => "Detalle de venta eliminado"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     } else {
