@@ -51,7 +51,7 @@ go
 ------Detalle de Venta-------------------------------------------
 create view vw_mostrar_detalle_venta
 as
-select id_venta,id_producto,precio_total,cantidad,precio from detalle_venta
+select id_renglon,id_venta,id_producto,precio_total,cantidad,precio from detalle_venta
 go
 -----------------------------------------------------------------
 ---------------------------------------------------------------
@@ -178,6 +178,7 @@ exec spu_crear_venta 1,1,'15/10/2024',1,85500,0
 
 ------Detalle de Venta-------------------------------------------
 create procedure spu_crear_detalle_venta
+@id_renglon bigint,
 @id_venta bigint,
 @id_producto bigint,
 @precio_total decimal(18,2),
@@ -191,11 +192,11 @@ begin
 end
 begin
 insert into detalle_venta
-values(@id_venta,@id_producto,@precio_total,@cantidad,@precio)
+values(@id_renglon,@id_venta,@id_producto,@precio_total,@cantidad,@precio)
 end
 go
 
-exec spu_crear_detalle_venta 1,1,6000,2,3000
+exec spu_crear_detalle_venta 1,1,1,6000,2,3000
 -----------------------------------------------------------------
 
 
@@ -287,14 +288,15 @@ exec spu_eliminar_venta 1
 
 ------Detalle de Venta-------------------------------------------
 create procedure spu_eliminar_detalle_venta
+@id_renglon bigint,
 @id_venta bigint,
 @id_producto bigint
 as
 delete from detalle_venta
-where id_venta = @id_venta and id_producto = @id_producto
+where id_renglon = @id_renglon and id_venta = @id_venta and id_producto = @id_producto
 go
 
-exec spu_eliminar_detalle_venta 1,1
+exec spu_eliminar_detalle_venta 1,1,1
 -----------------------------------------------------------------
 -----------------------------------------------------------------
 
@@ -420,6 +422,7 @@ exec spu_modificar_venta 1,1,'11/11/2011 11:11:11',1,850500,0
 
 ------Detalle de Venta-------------------------------------------
 create procedure spu_modificar_detalle_venta
+@id_renglon bigint,
 @id_venta bigint,
 @id_producto bigint,
 @precio_total decimal(18,2),
@@ -427,9 +430,9 @@ create procedure spu_modificar_detalle_venta
 @precio decimal(18,2)
 as
 update detalle_venta set precio_total=@precio_total,cantidad=@cantidad,precio=@precio
-where id_venta=@id_venta and id_producto=@id_producto
+where id_renglon = @id_renglon and id_venta=@id_venta and id_producto=@id_producto
 go
 
-exec spu_modificar_detalle_venta 1,1,3000,285.5,850500
+exec spu_modificar_detalle_venta 1,1,1,3000,285.5,850500
 -----------------------------------------------------------------
 -----------------------------------------------------------------
