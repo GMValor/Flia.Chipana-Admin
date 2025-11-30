@@ -61,6 +61,7 @@ go
 
 
 create table detalle_venta(
+id_renglon bigint,
 id_venta bigint,
 foreign key (id_venta) references ventas(id_venta),
 id_producto bigint,
@@ -68,7 +69,7 @@ foreign key (id_producto) references productos(id_producto),
 precio_total decimal(18,2),
 cantidad decimal(18,2),
 precio decimal(18,2),
-primary key (id_venta,id_producto))
+primary key (id_renglon,id_venta,id_producto))
 go
 
 
