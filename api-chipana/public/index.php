@@ -85,7 +85,7 @@ $header = $request->getHeaderLine('Authorization');
     ];
 
     $token = JWT::encode($payload, $key, 'HS256');
-    $response->getBody()->write(json_encode(["token" => $token]));
+    $response->getBody()->write(json_encode(["token" => $token, "role" => $role]));
     return $response->withHeader('Content-Type', 'application/json');
 });
 // Middleware para permitir CORS
