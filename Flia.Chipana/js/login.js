@@ -21,11 +21,12 @@ form.addEventListener("submit", async (e) => {
         const data = await res.json().catch(() => null);
 
         if (res.ok && data?.token) {
-            // Guardar token en localStorage
             localStorage.setItem("token", data.token);
-
-            window.location.href = "main.html"; // o clientes.html, etc.
+            localStorage.setItem("role", data.role); // guardar rol
+            
+            window.location.href = "main.html";
         } else {
+            
             errorMessage.innerText = data?.error || "Credenciales incorrectas.";
         }
 

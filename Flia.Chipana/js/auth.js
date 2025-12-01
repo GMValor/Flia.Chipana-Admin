@@ -42,6 +42,30 @@ if (!token) {
   window.location.href = "index.html";
 }
 
+//----------------------------------------------------------
+// MUESTRA UN MAIN DISTINTO DEPENDIENDO DEL ROL
+//----------------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    const role = localStorage.getItem("role");
+
+    if (!role) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    if (role === "admin") {
+        // Admin ve todo
+    } else if (role === "vendedor") {
+        // Ocultar enlaces de admin
+        document.querySelectorAll(".admin-only").forEach(el => el.style.display = "none");
+    } else {
+        // Si llega cualquier otro valor inesperado
+        console.warn("Rol desconocido:", role);
+        localStorage.clear();
+        window.location.href = "index.html";
+    }
+});
+
 
 
 
