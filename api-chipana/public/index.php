@@ -424,16 +424,15 @@ $app->get('/ventas', function (Request $request, Response $response) {
 $app->post('/ventas', function (Request $request, Response $response) {
     $data = json_decode($request->getBody(), true);   //obtiene lo que envio en el body
     $repo = new VentasRepository();
-
-     if($repo->crearVenta($data)) { //metodo de la clase Ventas
-        $response->getBody()->write(json_encode(["message" => "Venta creada"]));
+    $ventaCreada = $repo->crearVenta($data); 
+     if($ventaCreada) { //metodo de la clase Ventas
+        $response->getBody()->write(json_encode(["message" => "Venta creada",  "venta" => $ventaCreada  ]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
     } else {
         $response->getBody()->write(json_encode(["message" => "Error al crear la venta"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     }
 });
-
 
 $app->put('/ventas/{id_venta}', function (Request $request, Response $response, $args) {
     $id_venta = $args["id_venta"];    //obtiene el id que esta el URL
@@ -479,9 +478,14 @@ $app->get('/detalleVenta', function (Request $request, Response $response) {
 $app->post('/detalleVenta', function (Request $request, Response $response) {
     $data = json_decode($request->getBody(), true);   //obtiene lo que envio en el body
     $repo = new DetalleVentaRepository();
+   $detalleCreado = $repo->crearDetalleVenta($data); // retorna el detalle completo, incluyendo id_renglon
 
-     if($repo->crearDetalleVenta($data)) { //metodo de la clase detalle de ventas 
-        $response->getBody()->write(json_encode(["message" => "Detalle de venta creado"]));
+    if($detalleCreado) {
+        $response->getBody()->write(json_encode([
+            "message" => "Detalle de venta creado",
+            "detalle" => $detalleCreado
+        ]));
+     
         return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
     } else {
         $response->getBody()->write(json_encode(["message" => "Error al crear el detalle de venta"]));

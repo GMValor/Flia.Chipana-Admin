@@ -13,7 +13,7 @@ class VentasRepository {
         return $stmt->fetchAll();  //devuelve todo los registros (array) de la consulata
     }
 
-    // Crear venta
+     // Crear venta
     public function crearVenta($data) {   //data se llena desde el index en el post
         // Obtener el ID más alto actual
      $stmt = $this->pdo->query("SELECT MAX(id_venta) AS max_id FROM ventas");
@@ -29,8 +29,21 @@ class VentasRepository {
     $stmt->bindParam(':total', $data['total']);
     $stmt->bindParam(':descuento', $data['descuento']);
      
-  return $stmt->execute();
+ if ($stmt->execute()) {
+        // Devuelve la venta completa con id_venta generado
+        return [
+            "id_venta" => $nuevoId,
+            "id_usuario" => $data['id_usuario'],
+            "fecha" => $data['fecha'],
+            "id_cliente" => $data['id_cliente'],
+            "total" => $data['total'],
+            "descuento" => $data['descuento']
+        ];
     }
+
+    return false;
+}
+    
 
     // Actualizar venta
     public function actualizarVenta($id_venta, $data) {
@@ -43,7 +56,7 @@ class VentasRepository {
 
     // Eliminar venta
     public function eliminarVenta($id_venta) {
-        $stmt = $this->pdo->prepare("EXEC spu_eliminar_venta @id_venta = :id_venta");
-        return $stmt->execute(["id_venta" => $id_venta]);
+    $stmt = $this->pdo->prepare("EXEC spu_cancelarVenta @id_venta = :id_venta");
+    return $stmt->execute(["id_venta" => $id_venta]);
     }
 }
