@@ -298,6 +298,28 @@ go
 
 exec spu_eliminar_detalle_venta 1,1,1
 -----------------------------------------------------------------
+
+------Procedimiento para cancelar la venta-----------------------
+CREATE PROCEDURE spu_cancelarVenta
+ @id_venta INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRAN
+
+        DELETE FROM detalle_venta WHERE id_venta = @id_venta;
+        DELETE FROM detalle_forma_pago WHERE id_venta = @id_venta;
+        DELETE FROM ventas WHERE id_venta = @id_venta;
+
+        COMMIT;
+        SELECT 'OK' AS mensaje;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK;
+        SELECT ERROR_MESSAGE() AS mensaje;
+    END CATCH
+END;
+-----------------------------------------------------------------
 -----------------------------------------------------------------
 
 
