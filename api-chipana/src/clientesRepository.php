@@ -36,7 +36,7 @@ class ClientesRepository {
 
     // Actualizar cliente
     public function actualizarCliente($id_cliente, $data) {
-        $sql = "EXEC spu_modficar_cliente @id_cliente = :id_cliente, @nombre = :nombre, @apellido = :apellido, @telefono = :telefono, @direccion = :direccion, @email = :email, @deuda = :deuda";
+        $sql = "EXEC spu_modificar_cliente @id_cliente = :id_cliente, @nombre = :nombre, @apellido = :apellido, @telefono = :telefono, @direccion = :direccion, @email = :email, @deuda = :deuda";
         $stmt = $this->pdo->prepare($sql);
 
         $data["id_cliente"] = $id_cliente; //agregar el id del cliente en el array y luego se ejecuta todo
