@@ -3,7 +3,6 @@
 //                  MOSTRAR UN CLIENTE
 //----------------------------------------------------------
 
-//esta funcion se usa cada ves se carga la pag o cuando necesitas actualizar la tabla
 
 async function cargarProductos() {
     const tabla = document.getElementById("tabla-productos");
@@ -15,8 +14,21 @@ async function cargarProductos() {
 
         const productos = await res.json();
         tabla.innerHTML = "";
-        productos.forEach(productos => {
+        const hoy = new Date();
+        hoy.setHours(0,0,0,0); // solo fecha, sin horas
+
+         productos.forEach(productos => { 
+            const fechaCad = new Date(productos.fecha_cad);
+            const caducado = fechaCad < hoy; // true si caducado
+            const estado = caducado ? "Caducado" : "Vigente";
+
             const fila = document.createElement("tr");
+
+            // Aplicar estilo si está caducado
+            if (caducado) {
+                fila.style.backgroundColor = "#f5babfff"; 
+                fila.title = "Producto caducado";
+            }
             fila.innerHTML = `
                 <td>${productos.id_producto}</td>
                 <td>${productos.descripcion}</td>
@@ -25,6 +37,7 @@ async function cargarProductos() {
                 <td>${productos.precio}</td>
                 <td>${productos.costo}</td>
                 <td>${productos.fecha_cad}</td>
+                <td>${estado}</td> <!-- Nueva columna estado -->
                 <td class="actions">
                     <button class="btn-edit" data-id="${productos.id_producto}"><i class="fa-solid fa-pen-to-square"></i></button>
                     <button class="btn-delete" data-id="${productos.id_producto}"><i class="fa-solid fa-trash-can"></i></button>
@@ -39,10 +52,9 @@ async function cargarProductos() {
 
 
 //----------------------------------------------------------
-//                  AGREGAR UN CLIENTE
+//                  AGREGAR UN PRODUCTO
 //----------------------------------------------------------
 
-//funcion para mostrar el de agregado del cliente exitosamente 
 function mostrarMensaje(mensaje) {
   const toast = document.getElementById("mensaje-toast");
   toast.textContent = mensaje;
@@ -57,7 +69,7 @@ function mostrarMensaje(mensaje) {
   }, 2500);
 }
 
-// funcion para agregar un cliente
+// funcion para agregar un PRODUCTO
 function inicializarAgregarProducto() {
   const form = document.getElementById("form-agregar-producto");
   const panel = document.querySelector(".side-panel");
@@ -72,11 +84,34 @@ function inicializarAgregarProducto() {
     botonAgregar.disabled = true;
     botonAgregar.textContent = "Agregando...";
 
-    const token = localStorage.getItem("token");
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
     try {
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // Convertir precio, costo y stock a números
+      data.precio = parseNumero(data.precio);
+      data.costo = parseNumero(data.costo);
+      data.stock = parseNumero(data.stock);
+
+      // Validación: precio >= costo
+      if (data.precio < data.costo) {
+        mostrarMensaje("El precio no puede ser menor que el costo");
+        botonAgregar.disabled = false;
+        botonAgregar.textContent = "Agregar";
+        return;
+      }
+
+      // Validación: fecha de caducidad >= hoy
+      const fechaHoy = new Date();
+      fechaHoy.setHours(0,0,0,0);
+      const fechaCad = new Date(data.fecha_cad);
+      if (fechaCad < fechaHoy) {
+        mostrarMensaje("La fecha de caducidad no puede ser anterior a hoy");
+        botonAgregar.disabled = false;
+        botonAgregar.textContent = "Agregar";
+        return;
+      }
+
       const res = await fetchConToken(`${API_URL}/productos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -85,11 +120,11 @@ function inicializarAgregarProducto() {
 
       if (!res.ok) throw new Error("Error al agregar producto");
 
-      mostrarMensaje("producto agregado exitosamente");
+      mostrarMensaje("Producto agregado exitosamente");
       form.reset();
       panel.classList.remove("active");
       overlay.classList.remove("active");
-      cargarProductos(); // refresca la tabla
+      cargarProductos();
     } catch (err) {
       console.error(err);
       mostrarMensaje("Error al agregar producto");
@@ -100,13 +135,14 @@ function inicializarAgregarProducto() {
   });
 }
 
+
   //panel agregar
 document.addEventListener("click", (e) => {
   const panel = document.querySelector(".side-panel");
   const overlay = document.getElementById("overlay");
-  const form = document.getElementById("form-agregar-productos");
+  const form = document.getElementById("form-agregar-producto");
 
-  if (!panel || !overlay) return; // Evita errores si no existen
+  if (!panel || !overlay) return; 
 
   if (e.target.matches(".btn-add-producto")) {
     panel.classList.add("active");
@@ -192,12 +228,33 @@ function inicializarEditarProducto() {
   botonActualizar.disabled = true;
   botonActualizar.textContent = "Actualizando...";
 
-  try {
+try {
     const formData = new FormData(formEditar);
     const data = Object.fromEntries(formData.entries());
 
-    console.log("Enviando datos:", data);
-    console.log("Valor proveedor en submit:", formEditar.elements["id_proveedor"].value);
+    // Convertir precio, costo y stock a números
+    data.precio = parseNumero(data.precio);
+    data.costo = parseNumero(data.costo);
+    data.stock = parseNumero(data.stock);
+
+    // Validación: precio >= costo
+    if (data.precio < data.costo) {
+      mostrarMensaje("El precio no puede ser menor que el costo");
+      botonActualizar.disabled = false;
+      botonActualizar.textContent = "Actualizar";
+      return;
+    }
+
+    // Validación: fecha de caducidad >= hoy
+    const fechaHoy = new Date();
+    fechaHoy.setHours(0,0,0,0);
+    const fechaCad = new Date(data.fecha_cad);
+    if (fechaCad < fechaHoy) {
+      mostrarMensaje("La fecha de caducidad no puede ser anterior a hoy");
+      botonActualizar.disabled = false;
+      botonActualizar.textContent = "Actualizar";
+      return;
+    }
 
     const id_producto = data.id_producto;
     delete data.id_producto;
@@ -207,6 +264,7 @@ function inicializarEditarProducto() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
 
     if (!res.ok) throw new Error("Error al actualizar producto");
 
@@ -252,11 +310,11 @@ function inicializarEliminarProducto() {
     idproductoAEliminar = btnEliminar.getAttribute("data-id");
     if (!idproductoAEliminar) return;
 
-    // obtenemos el nombre de la fila para mostrar
-    const fila = btnEliminar.closest("tr");
-    const nombreProducto = fila.children[1].textContent + " " + fila.children[2].textContent; // nombre + apellido
 
-    // Lo ponemos en el cartelito
+    const fila = btnEliminar.closest("tr");
+    const nombreProducto = fila.children[1].textContent + " " + fila.children[2].textContent;
+
+
     nombreProductoSpan.textContent = nombreProducto;
 
     confirmDiv.style.display = "block";

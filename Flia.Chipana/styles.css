@@ -361,7 +361,7 @@ MODULOS
 }
 
 /* Filas */
-.custom-table tr:nth-child(even) {      /*intercalar el color de la filas 2,4,6,etc*/
+.custom-table tr:nth-child(even) {    
     background-color: #e7e7e7;
 }
 
@@ -407,6 +407,10 @@ MODULOS
     overflow-y: auto;  /* activa scroll vertical si hay más filas */
 }
 
+.table-scroll-container {
+    scrollbar-width: thin;                 /* barra más delgada */
+    scrollbar-color: #c1c1c1 #f0f0f0;     /* thumb y track */
+}
 /* mensaje de agregado exitosamente */
 #mensaje-toast{
   position: fixed;
@@ -540,8 +544,9 @@ PANEL LATERAL (oculto al inicio)
 .form-agregar label {
     font-weight: bold;
     color: #000000;
-    margin-top: 8px;
-    font-size: 15px;
+    margin-top: -10px;
+    font-size: 14px;
+    margin-bottom: -21px;
 }
 
 .form-agregar input {
@@ -576,7 +581,7 @@ PANEL LATERAL (oculto al inicio)
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 14px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -761,4 +766,599 @@ PANEL LATERAL (oculto al inicio)
 /* --- Espaciado del resultado --- */
 #resultado {
     margin-top: 30px;
+}
+
+
+
+
+/* 
+----------------------------------------------
+DETALLE DE VENTAS 
+--------------------------------------------- */
+
+
+
+/* Overlay */
+#overlay-venta {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 9000;
+}
+
+#overlay-venta.active {
+  display: block;
+}
+
+/* Panel principal */
+#panel-venta {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 86%;
+  height: 100vh;
+  background: white;
+  box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 10000;
+  
+  display: flex;
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #111;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  overflow: hidden;
+}
+
+#panel-venta.active {
+  transform: translateX(0);
+}
+
+/* Ocultar header */
+.panel-venta-header {
+  display: none;
+}
+
+/* Contenedor columnas */
+
+.venta-left {
+    flex: 2;
+    padding: 20px 15px;
+    box-sizing: border-box;
+    width: 800px;
+    border-right: 1px solid #E1BDBD;
+    display: flex;
+    flex-direction: column;
+}
+
+.venta-right {
+    flex: 1;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-left: 25px;
+}
+
+/* Buscador */
+.venta-search-container {
+    margin-top: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.venta-search-container input {
+  width: 40%;
+  padding: 9px 15px;
+  border-radius: 20px;
+  border: 1px solid #d6d5d5;
+  background: #f3d1d1e1;
+  font-weight: 600;
+  font-size: 13px;
+  color: #111;
+  outline: none;
+}
+
+.venta-search-container button {
+  position: absolute;
+  top: 50%;
+  right: 57%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #7a7777;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* Tabla productos */
+.venta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    
+}
+
+.venta-table thead tr th {
+    background: #ffe6e6;
+    color: rgb(177, 7, 19);
+    text-align: left;
+    padding: 7.5px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-right: 2px solid white;
+}
+
+.venta-table tbody tr {
+  background: #FAFAFA;
+  border-radius: 8px;
+}
+
+.venta-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+/* Filas */
+.venta-table tr:nth-child(even) {     
+    background-color: #e7e7e7;
+}
+.venta-table tbody tr td {
+  padding: 8px 15px;
+  vertical-align: middle;
+  color: #444444;
+}
+
+/* Producto y cantidad */
+.venta-agregar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+/* Poner texto y span/input en línea */
+.venta-agregar-container label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+/* Botón al lado del input */
+#venta-cantidad-producto {
+  width: 80px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1.5px solid #BEBEBE;
+  font-weight: 600;
+  font-size: 14px;
+  outline: none;
+}
+
+.btn-submit-venta {
+  background-color: #63D99B;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  margin-left: 200px; 
+  margin-top: -40px;
+  align-self: flex-start; 
+}
+
+.btn-submit-venta:hover {
+  background-color: #4DB87D;
+}
+
+/* Carrito derecho */
+.venta-carrito {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #111;
+  overflow-y: auto;
+}
+
+.venta-carrito h4 {
+    margin-top: -1px;
+  font-weight: 700;
+  margin-bottom: 0px;
+  font-size: 16px;
+}
+
+.venta-carrito p {
+  font-weight: 600;
+  font-size: 14.5px;
+  margin-bottom: 10px;
+}
+
+/* Tabla carrito */
+#venta-tabla-carrito {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0px;
+  font-size: 13px;
+  /* flex-grow: 1; */
+  overflow-y: auto;
+}
+#venta-tabla-carrito thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#venta-tabla-carrito thead tr th {
+    background: #ffe6e6;
+    color: rgb(177, 7, 19);
+    text-align: left;
+    padding: 7.5px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-right: 2px solid white;
+}
+
+#venta-tabla-carrito tbody tr {
+  background: #f1efef;
+  border-radius: 8px;
+}
+
+#venta-tabla-carrito tbody tr td {
+  padding: 1.2px 15px;
+  vertical-align: middle;
+  color: #272727;
+}
+/* Filas */
+#venta-tabla-carrito tr:nth-child(even) {     
+    background-color: #e7e7e7;
+}
+
+#venta-tabla-carrito tbody tr td:last-child {
+  text-align: center;
+}
+
+/* Botón eliminar */
+#venta-tabla-carrito tbody tr td .btn-eliminar {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #e04848;
+  font-size: 18px;
+}
+.venta-bottom {
+    margin-top: auto;      
+    display: flex;
+    flex-direction: column;
+    gap: 10px;            
+}
+
+
+/* Botón cerrar */
+.btn-close-venta {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #111;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-weight: 700;
+  z-index: 10001;
+}
+
+
+#venta-tabla-productos tr.selected {
+    background-color: #ffc5c5 !important;
+    transition: 0.15s;
+}
+
+
+
+
+
+
+
+/* CABEZERA */
+
+.venta-header {
+    background: #fae0e0;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.venta-header-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.venta-header label {
+    font-weight: bold;
+}
+
+.btn-iniciar-venta {
+    background: #49a54c;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-cancelar-venta {
+    background: #af3c38;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-iniciar-venta:hover {
+    background: #1e8521;
+    font-weight: bold;
+
+}
+
+.btn-cancelar-venta:hover {
+     background: #851e1e;
+    font-weight: bold;
+}
+
+.oculto {
+    display: none !important;
+}
+
+
+
+
+.toast {
+    position: fixed;
+    top: 90%;       
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    z-index: 20000;
+}
+/* Opcional: colores según tipo de mensaje */
+.toast.success { background-color: #4CAF50; }  
+.toast.error { background-color: #f44336; }    
+.toast.info { background-color: #2196F3; }   
+
+
+
+.confirm-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+
+.confirm-dialog.hidden {
+  display: none;
+}
+
+.confirm-content {
+  background:#f3d1d1;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 5px #000;
+  max-width: 320px;
+  text-align: center;
+  font-size: 15px;
+
+}
+
+.confirm-buttons {
+  margin-top: 20px;
+}
+
+.confirm-buttons button {
+  margin: 0 15px;
+  padding: 7px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#btn-confirm-yes {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#btn-confirm-yes:hover {
+  background-color: #45a049;
+}
+
+#btn-confirm-no {
+  background-color: #f44336;
+  color: white;
+}
+
+#btn-confirm-no:hover {
+  background-color: #da2e2e;
+}
+
+
+
+#venta-select-cliente {
+  padding: 8px 10px;
+  font-size: 15px;
+  border: none;              
+  border-bottom: 2px solid #cc8d8d;  
+  background-color: transparent; 
+  box-shadow: none;          
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+  outline: none;
+  min-width: 20px;
+}
+
+#venta-select-cliente:hover {
+  border-bottom-color: #9b1717;
+}
+
+
+
+
+
+.ticket-panel {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #00000080;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+.ticket-content {
+    background: white;
+    padding: 20px;
+    width: 350px;
+    font-family: monospace;
+    border-radius: 5px;
+}
+.ticket-content h2 {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+
+
+
+/* Contenedor general de formas de pago */
+.venta-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Formulario de agregar forma de pago */
+.venta-bottom label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.venta-bottom select,
+.venta-bottom input[type="number"] {
+    padding: 5px 8px;
+    margin-right: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.venta-bottom button#venta-btn-agregar-forma {
+    padding: 6px 5px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.venta-bottom button#venta-btn-agregar-forma:hover {
+    background-color: #45a049;
+}
+
+/* Lista de formas agregadas */
+.lista-formas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 120px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+.lista-formas li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.lista-formas li:last-child {
+    border-bottom: none;
+}
+
+.lista-formas li button {
+    background: none;
+    border: none;
+    color: #ff4d4f;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Totales */
+.venta-total  {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: -25px;
+       margin-top: -15px;
+}
+.venta-total p {
+font-size: 18px;
+}
+.venta-vuelto  {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+.venta-vuelto p  {
+font-size: 15px;
+}
+/* Botón Finalizar */
+button#venta-btn-finalizar {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button#venta-btn-finalizar:hover {
+    background-color: #0069d9;
 }

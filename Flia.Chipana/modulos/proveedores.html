@@ -61,10 +61,18 @@
   </div>
   <form id="form-editar-proveedor" class="form-agregar">
     <input type="hidden" name="id_proveedor" />
-    <input type="text" name="nombre" placeholder="Nombre" required>
-    <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="telefono" placeholder="Teléfono" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="text" name="direccion" placeholder="Dirección" required>
+
+    <label for="nombre">Nombre</label>
+    <input type="text" name="nombre"  required>
+
+    <label for="telefono">Teléfono</label>
+    <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="telefono" required>
+    
+    <label for="email">Email</label>
+    <input type="email" name="email"  required>
+    
+    <label for="direccion">Dirección</label>
+    <input type="text" name="direccion"  required>
     <button type="submit" class="btn-submit">Actualizar</button>
   </form>
 </div>

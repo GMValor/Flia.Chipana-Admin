@@ -44,8 +44,13 @@ function cargarModulo(modulo) {
                     break;
 
 
-                case "ventas.php":
-                    inicializarBuscadorGlobal(".search-bar", ".custom-table", [0, 2, 4]); // id, fecha, total
+                case "ventas.html":
+                    cargarVentas();
+                    inicializarEliminarVenta();
+                    inicializarTicketPDF()
+                  // 1. Cargar clientes en el select
+                    inicializarEventosVentas(); 
+                    inicializarBuscadorGlobal("#venta-buscar-productos",".venta-table", [0, 1]); // id, fecha, total
                     break;
                 
                 case "consultas.html":

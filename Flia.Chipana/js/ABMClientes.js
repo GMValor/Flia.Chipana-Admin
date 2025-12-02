@@ -83,6 +83,8 @@ function inicializarAgregarCliente() {
     const token = localStorage.getItem("token");
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+          // Convertir deuda a número decimal
+    data.deuda = parseNumero(data.deuda);
 
     try {
       const res = await fetchConToken(`${API_URL}/clientes`, {
@@ -203,6 +205,8 @@ function inicializarEditarCliente() {
 
     const formData = new FormData(formEditar);
     const data = Object.fromEntries(formData.entries());
+      // Convertir deuda a número decimal
+    data.deuda = parseNumero(data.deuda);
     const id_cliente = data.id_cliente;
     delete data.id_cliente; // No enviamos el id en el body porque va en la URL
 
@@ -296,3 +300,54 @@ function inicializarEliminarCliente() {
 
 
 
+
+
+// -----------------------------------------------
+//           FUNCION PARA DECIMALES 
+// ----------------------------------------------
+/**
+.
+
+ * @param {HTMLInputElement} input - El input que se está validando
+ * @param {Object} options - Opciones de validación
+ *   options.decimals: cantidad máxima de decimales (default 2)
+ */
+function validarNumero(input, options = {}) {
+  const decimals = options.decimals ?? 2;
+  let valor = input.value;
+
+  // Permite solo dígitos, coma y punto
+  valor = valor.replace(/[^0-9.,]/g, '');
+
+  // Solo dejamos el primer separador que aparezca
+  const indicesSeparadores = ['.', ','].map(s => valor.indexOf(s)).filter(i => i >= 0);
+  const primerSeparadorIndex = indicesSeparadores.length ? Math.min(...indicesSeparadores) : -1;
+
+  if (primerSeparadorIndex >= 0) {
+    const separador = valor[primerSeparadorIndex];
+    const antes = valor.slice(0, primerSeparadorIndex);
+    let despues = valor.slice(primerSeparadorIndex + 1);
+    // Eliminamos cualquier otro separador restante
+    despues = despues.replace(/[.,]/g, '');
+    valor = antes + separador + despues;
+
+    // Limitar decimales
+    const partes = valor.split(/[.,]/);
+    if (partes[1]) {
+      partes[1] = partes[1].slice(0, decimals);
+      valor = partes[0] + separador + partes[1];
+    }
+  }
+
+  input.value = valor;
+}
+
+/**
+ * Convierte un valor con coma o punto a número decimal
+ * @param {string} valor - Ej: "100,50" o "100.50"
+ * @returns {number}
+ */
+function parseNumero(valor) {
+  if (!valor) return 0;
+  return parseFloat(valor.replace(',', '.')) || 0;
+}

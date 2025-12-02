@@ -32,6 +32,7 @@
                 <th>Precio</th>
                 <th>Costo</th>
                 <th>Fecha Caducidad</th>
+                <th>Estado</th>
                 <th>Acción</th>
             </tr>
         </thead>
@@ -49,13 +50,14 @@
     </div>
     <form id="form-agregar-producto" class="form-agregar">
       <input type="text" name="descripcion" placeholder="Descripcion" required>
-      <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="stock" placeholder="Stock">
+
+      <input type="text"  oninput="validarNumero(this)"  name="stock" placeholder="Stock">
 <!-- Select para proveedor -->
     <select id="id_proveedor" name="id_proveedor" class="form-input" required>
       <option value="">Seleccionar proveedor...</option>
     </select>
-      <input type="number"  min="0"   oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="precio" placeholder="Precio">
-      <input type="number"  min="0"   oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="costo" placeholder="Costo">
+      <input type="text" oninput="validarNumero(this)" name="precio" placeholder="Precio">
+      <input type="text"  oninput="validarNumero(this)" name="costo" placeholder="Costo">
       <input type="date" name="fecha_cad" placeholder="Fecha Caducidad" required>
       <button type="submit" class="btn-submit">Agregar</button>
     </form>
@@ -70,15 +72,26 @@
   </div>
   <form id="form-editar-producto" class="form-agregar">
     <input type="hidden" name="id_producto" />
-    <input type="text" name="descripcion" placeholder="Descripcion" required>
-    <input type="number"  min="0"   oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="stock" placeholder="Stock">
-<!-- Select para proveedor -->
-    <select id="id_proveedor_editar" name="id_proveedor" class="form-input" required>
+
+    <label for="descripcion">Descripción</label>
+    <input type="text" id="descripcion" name="descripcion" required>
+
+    <label for="stock">Stock</label>
+    <input type="text" id="stock" name="stock" oninput="validarNumero(this)">
+
+    <label for="id_proveedor_editar">Proveedor</label>
+    <select id="id_proveedor_editar" name="id_proveedor" required>
       <option value="">Seleccionar proveedor...</option>
     </select>
-    <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="precio" placeholder="Precio">
-    <input type="number"  min="0"  oninput="this.value = this.value.replace(/[^0-9]/g,'');" name="costo" placeholder="Costo">
-    <input type="date" name="fecha_cad" placeholder="Fecha Caducidad" required>
+
+    <label for="precio">Precio</label>
+    <input type="text" id="precio" name="precio" oninput="validarNumero(this)">
+
+    <label for="costo">Costo</label>
+    <input type="text" id="costo" name="costo" oninput="validarNumero(this)">
+
+    <label for="fecha_cad">Fecha de Caducidad</label>
+    <input type="date" id="fecha_cad" name="fecha_cad" required>
 
     <button type="submit" class="btn-submit">Actualizar</button>
   </form>
