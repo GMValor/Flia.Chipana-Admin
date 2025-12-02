@@ -459,7 +459,7 @@ $app->delete('/ventas/{id_venta}', function (Request $request, Response $respons
         $response->getBody()->write(json_encode(["message" => "Error al eliminar la venta"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     }
-})->add(new RoleMiddleware(['admin']));
+})->add(new RoleMiddleware(['admin', 'vendedor']));
 
 
 
@@ -522,7 +522,7 @@ $app->delete('/detalleVenta/{id_renglon}/{id_venta}/{id_producto}', function (Re
         $response->getBody()->write(json_encode(["message" => "Error al eliminar el detalle de venta"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     }
-})->add(new RoleMiddleware(['admin']));
+})->add(new RoleMiddleware(['admin', 'vendedor']));
 
 //-------------------------------------------------------
 // CONSULTAS
