@@ -38,7 +38,6 @@ begin
 	update ventas set total = total + inserted.precio_total from ventas v
 	inner join inserted on v.id_venta = inserted.id_venta
 end
-drop trigger tgr_bajar_detalle
 -----------------------------------------------------------------------
 
 ----Trigger para actualizar el detalle---------------------------------
