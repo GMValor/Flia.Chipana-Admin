@@ -79,6 +79,7 @@ $header = $request->getHeaderLine('Authorization');
         "nbf" => time(),
         "exp" => time() + 86400,
         "data" => [
+            "id_usuario" => $user["id_usuario"], 
             "username" => $username,
             "role" => $role
         ]
