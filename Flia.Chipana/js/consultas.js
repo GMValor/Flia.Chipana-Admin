@@ -51,7 +51,8 @@ function mostrarConsulta(tipo) {
       </div>
       </label> <button onclick="consultarProductoPorProveedor()">
       Consultar</button> 
-      <div id="resultado"></div> ; `  
+      <div id="resultado"></div>
+      `;  
       break;
 
     case "productofechacaducidad":
