@@ -941,11 +941,11 @@ DETALLE DE VENTAS
 }
 
 .btn-submit-venta {
-  background-color: #63D99B;
+  background-color: #4caf50;
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 20px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 700;
   font-size: 14px;
@@ -955,7 +955,7 @@ DETALLE DE VENTAS
 }
 
 .btn-submit-venta:hover {
-  background-color: #4DB87D;
+  background-color: #3a9b3d;
 }
 
 /* Carrito derecho */
