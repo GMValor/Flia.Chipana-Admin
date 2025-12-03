@@ -25,7 +25,7 @@ create procedure spu_filtrar_venta_por_fecha
 @fecha_desde date,
 @fecha_hasta date
 as
-select id_venta,ventas.id_usuario,usuarios.nombre,ventas.id_cliente,clientes.nombre,total,descuento,fecha from ventas
+select id_venta,ventas.id_usuario,usuarios.nombre,ventas.id_cliente,clientes.nombre,total,fecha from ventas
 inner join usuarios on ventas.id_usuario = usuarios.id_usuario
 inner join clientes on ventas.id_cliente = clientes.id_cliente
 where fecha between @fecha_desde and @fecha_hasta

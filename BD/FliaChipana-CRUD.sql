@@ -44,7 +44,7 @@ go
 ----Venta--------------------------------------------------------
 create view vw_mostrar_ventas
 as
-select id_venta,id_usuario,fecha,id_cliente,total,descuento from ventas
+select id_venta,id_usuario,fecha,id_cliente,total from ventas
 go
 -----------------------------------------------------------------
 
@@ -166,14 +166,13 @@ create procedure spu_crear_venta
 @id_usuario int,
 @fecha datetime,
 @id_cliente int,
-@total decimal(18,2),
-@descuento decimal(18,2)
+@total decimal(18,2)
 as
 insert into ventas
-values(@id_venta,@id_usuario,@fecha,@id_cliente,@total,@descuento)
+values(@id_venta,@id_usuario,@fecha,@id_cliente,@total)
 go
 
-exec spu_crear_venta 1,1,'15/10/2024',1,85500,0
+exec spu_crear_venta 1,1,'15/10/2024',1,85500
 -----------------------------------------------------------------
 
 ------Detalle de Venta-------------------------------------------
@@ -432,14 +431,13 @@ create procedure spu_modificar_venta
 @id_usuario int,
 @fecha datetime,
 @id_cliente int,
-@total decimal(18,2),
-@descuento decimal(18,2)
+@total decimal(18,2)
 as
-update ventas set id_usuario=@id_usuario,fecha=@fecha,id_cliente=@id_cliente,total=@total,descuento=@descuento
+update ventas set id_usuario=@id_usuario,fecha=@fecha,id_cliente=@id_cliente,total=@total
 where id_venta=@id_venta
 go
 
-exec spu_modificar_venta 1,1,'11/11/2011 11:11:11',1,850500,0
+exec spu_modificar_venta 1,1,'11/11/2011 11:11:11',1,850500
 -----------------------------------------------------------------
 
 ------Detalle de Venta-------------------------------------------

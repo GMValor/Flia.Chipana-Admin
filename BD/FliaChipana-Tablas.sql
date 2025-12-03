@@ -55,8 +55,7 @@ foreign key (id_usuario) references usuarios(id_usuario),
 fecha datetime,
 id_cliente int,
 foreign key (id_cliente) references clientes(id_cliente),
-total decimal(18,2),
-descuento decimal(18,2))
+total decimal(18,2))
 go
 
 
