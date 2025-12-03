@@ -1,2 +1,2 @@
 // Configuración de la URL base de la API
-const API_URL = "http://172.16.202.232/api-chipana/public";
+const API_URL = "http://192.168.100.88/api-chipana/public";

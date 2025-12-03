@@ -102,13 +102,13 @@ function eliminarForma(index) {
 
 
 function actualizarVuelto() {
-    let totalVentaStr = document.getElementById("venta-total-venta").textContent;
+    let totalVentaStr = document.getElementById("venta-total-venta").textContent.trim();
 
     // Eliminar puntos de miles
     totalVentaStr = totalVentaStr.replace(/\./g, '');
 
-    // Eliminar comas de miles
-    totalVentaStr = totalVentaStr.replace(/,/g, '');
+    // Reemplazar coma decimal por punto
+    totalVentaStr = totalVentaStr.replace(/,/g, '.');
 
     const totalVenta = parseFloat(totalVentaStr);
 
@@ -116,8 +116,9 @@ function actualizarVuelto() {
     const vuelto = totalPagado - totalVenta;
 
     document.getElementById("venta-vuelto-venta").textContent =
-        vuelto > 0 ? vuelto.toLocaleString() : "0";
+        vuelto > 0 ? vuelto.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "0";
 }
+
 
 
 

@@ -78,7 +78,7 @@ function inicializarSeleccionProducto() {
     productoSeleccionado = {
         id_producto: fila.children[0].textContent,
         descripcion: fila.children[1].textContent,
-        stock: parseInt(fila.children[2].textContent, 10),
+        stock: parseFloat(fila.children[2].textContent, 10),
         precio: parseFloat(fila.children[3].textContent.replace(/,/g,''))
     };
         console.log("Producto seleccionado:", productoSeleccionado);
@@ -260,7 +260,7 @@ try {
             mostrarToast("No queda stock disponible de este producto");
             return;
         }
-        if (cantidad < 1 || cantidad > stockDisponible) {
+        if (cantidad < 0.01 || cantidad > stockDisponible) {
             mostrarToast("Cantidad inválida");
             return;
         }
