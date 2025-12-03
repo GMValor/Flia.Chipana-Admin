@@ -20,14 +20,13 @@ class VentasRepository {
     $maxIdRow = $stmt->fetch(\PDO::FETCH_ASSOC);
     $nuevoId = ($maxIdRow['max_id'] ?? 0) + 1;
 
-    $stmt = $this->pdo->prepare("EXEC spu_crear_venta @id_venta =:id_venta, @id_usuario = :id_usuario, @fecha = :fecha, @id_cliente = :id_cliente, @total = :total, @descuento = :descuento");
+    $stmt = $this->pdo->prepare("EXEC spu_crear_venta @id_venta =:id_venta, @id_usuario = :id_usuario, @fecha = :fecha, @id_cliente = :id_cliente, @total = :total");
 
     $stmt->bindParam(':id_venta', $nuevoId);
     $stmt->bindParam(':id_usuario', $data['id_usuario']);
     $stmt->bindParam(':fecha', $data['fecha']);
     $stmt->bindParam(':id_cliente', $data['id_cliente']);
     $stmt->bindParam(':total', $data['total']);
-    $stmt->bindParam(':descuento', $data['descuento']);
      
  if ($stmt->execute()) {
         // Devuelve la venta completa con id_venta generado
@@ -36,8 +35,7 @@ class VentasRepository {
             "id_usuario" => $data['id_usuario'],
             "fecha" => $data['fecha'],
             "id_cliente" => $data['id_cliente'],
-            "total" => $data['total'],
-            "descuento" => $data['descuento']
+            "total" => $data['total']
         ];
     }
 
@@ -47,7 +45,7 @@ class VentasRepository {
 
     // Actualizar venta
     public function actualizarVenta($id_venta, $data) {
-        $sql = "EXEC spu_modificar_venta @id_venta =:id_venta, @id_usuario = :id_usuario, @fecha = :fecha, @id_cliente = :id_cliente, @total = :total, @descuento = :descuento";
+        $sql = "EXEC spu_modificar_venta @id_venta =:id_venta, @id_usuario = :id_usuario, @fecha = :fecha, @id_cliente = :id_cliente, @total = :total";
         $stmt = $this->pdo->prepare($sql);
 
         $data["id_venta"] = $id_venta; //agregar el id de la venta en el array y luego se ejecuta todo

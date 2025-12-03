@@ -25,7 +25,6 @@ async function cargarVentas() {
                 <td>${venta.fecha}</td>
                 <td>${venta.id_cliente}</td>
                 <td>${venta.total}</td>
-                <td>${venta.descuento}</td>
                 <td class="actions">
                     <button class="btn-edit" data-id="${venta.id_venta}"><i class="fa-solid fa-eye"></i></button>
                     <button class="btn-delete" data-id="${venta.id_venta}"><i class="fa-solid fa-trash-can"></i></button>
@@ -89,8 +88,7 @@ async function crearVenta() {
         id_usuario: localStorage.getItem("id_usuario") || "1",
         fecha: fechaHora,
         id_cliente: String(idCliente),
-        total: "0",
-        descuento: "0"
+        total: "0"
     };
   console.log("Datos que se enviarán a la API:", data); 
     try {
@@ -407,7 +405,7 @@ if (btnIniciar) {
 if (btnAgregar) {
     btnAgregar.addEventListener("click", async () => {
         const cantidadInput = document.getElementById("venta-cantidad-producto");
-        const cantidad = parseInt(cantidadInput.value, 10);
+        const cantidad = parseFloat(cantidadInput.value, 10);
 
         await agregarProductoAlCarrito(productoSeleccionado, cantidad);
 
@@ -533,13 +531,21 @@ async function finalizarVenta() {
     const clienteNombre = selectCliente ? selectCliente.options[selectCliente.selectedIndex].textContent : "Consumidor Final";
  
 
+   const vueltoStr = document.getElementById("venta-vuelto-venta").textContent.trim();
+
+// Eliminar separadores de miles (puntos o comas)
+    let normalizado = vueltoStr.replace(/\./g, '').replace(/,/g, '.');
+
+    const vuelto = parseFloat(normalizado);
+
     await descargarTicketPDF(
         idVentaGenerada,
         ticketCarrito,
         formasSeleccionadas,
-        parseFloat(document.getElementById("venta-vuelto-venta").textContent.replace(/,/g,'')),
+        vuelto,
         clienteNombre
     );
+
 
     // Reset UI y variables
     carrito = [];
@@ -556,7 +562,7 @@ async function finalizarVenta() {
     ocultarPanelProductos();
 
     document.getElementById("venta-btn-iniciar").disabled = false;
-    document.getElementById("venta-btn-finalizar").disabled = true;
+    document.getElementById("venta-btn-finalizar").disabled = false;
     document.getElementById("venta-select-cliente").disabled = false;
 
     mostrarToast("Venta finalizada", "success");

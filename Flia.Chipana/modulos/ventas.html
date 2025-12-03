@@ -28,7 +28,6 @@
                     <th>Fecha</th>
                     <th>ID Cliente</th>
                     <th>Total</th>
-                    <th>Descuento</th>
                     <th>Acción</th>
                 </tr>
             </thead>
@@ -115,7 +114,7 @@
       <!--AGREGAR PRODUCTO -->
       <div class="venta-agregar-container">
         <label>Producto: <span id="venta-producto-seleccionado">Ninguno</span></label>
-        <label>Cantidad: <input type="number" id="venta-cantidad-producto" min="1" value="1" /></label>
+        <label>Cantidad: <input type="number" id="venta-cantidad-producto" min="1" step="0.01" value="1.00" /></label>
         <button id="venta-btn-agregar-producto" class="btn-submit-venta">Agregar</button>
       </div>
   </div>
