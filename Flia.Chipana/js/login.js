@@ -1,3 +1,13 @@
+
+//----------------------------------------------------------
+//     FUNCIÓN PARA DECODIFICAR JWT
+//----------------------------------------------------------
+function decodeJWT(token) {
+    const payload = token.split('.')[1];
+    const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(decoded);
+}
+
 const form = document.getElementById("login-form");
 const errorMessage = document.getElementById("error-message");
 
@@ -21,10 +31,19 @@ form.addEventListener("submit", async (e) => {
         const data = await res.json().catch(() => null);
 
         if (res.ok && data?.token) {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("role", data.role); // guardar rol
-            
-            window.location.href = "main.html";
+
+    // Guardar token
+    localStorage.setItem("token", data.token);
+
+    // Decodificar JWT para extraer id_usuario, username y role
+    const payload = decodeJWT(data.token);
+
+    localStorage.setItem("id_usuario", payload.data.id_usuario);
+    localStorage.setItem("username", payload.data.username);
+    localStorage.setItem("role", payload.data.role);
+
+    window.location.href = "main.html";
+
         } else {
             
             errorMessage.innerText = data?.error || "Credenciales incorrectas.";
@@ -35,3 +54,4 @@ form.addEventListener("submit", async (e) => {
         errorMessage.innerText = "No se pudo conectar con el servidor.";
     }
 });
+
